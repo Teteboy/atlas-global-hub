@@ -17,7 +17,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground font-sans">
       <Navbar />
-      <main className="flex-1 flex flex-col pt-[72px] md:pt-[80px]">
+      <main className="flex-1 flex flex-col">
         {children}
       </main>
       <Footer />

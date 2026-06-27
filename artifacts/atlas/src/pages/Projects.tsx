@@ -1,8 +1,9 @@
 import { useLanguage } from "@/hooks/use-language";
 import { useListProjects } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
+import { ArrowUpRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Projects() {
   const { t, lang } = useLanguage();
@@ -10,83 +11,144 @@ export default function Projects() {
 
   return (
     <div className="w-full">
-      <section className="bg-foreground text-background py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-white">
-              {t("Nos Réalisations", "Our Achievements")}
-            </h1>
-            <p className="text-xl text-zinc-400">
-              {t(
-                "Des résultats mesurables, livrés dans des environnements complexes pour des institutions exigeantes.",
-                "Measurable results delivered in complex environments for demanding institutions."
-              )}
-            </p>
+
+      {/* HERO */}
+      <section className="relative min-h-[55vh] flex items-end bg-[#080E1C] pb-16 pt-40 overflow-hidden">
+        <div className="absolute inset-0 hero-grid opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_20%,rgba(0,196,212,0.1),transparent)]" />
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4 flex items-center gap-3">
+            <span className="w-6 h-px bg-[#00C4D4]" />
+            <span className="text-[#00C4D4] text-xs font-semibold tracking-[0.2em] uppercase">{t("Réalisations", "Projects")}</span>
           </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl text-white leading-tight max-w-3xl"
+          >
+            {t("Mandats & réalisations", "Mandates & achievements")}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 text-white/55 text-lg max-w-2xl leading-relaxed"
+          >
+            {t(
+              "Des projets transformateurs conduits avec rigueur, transparence et un focus sur l'impact mesurable.",
+              "Transformative projects conducted with rigor, transparency and a focus on measurable impact."
+            )}
+          </motion.p>
         </div>
       </section>
 
-      <section className="py-24 bg-secondary/30">
-        <div className="container mx-auto px-4 md:px-6">
+      {/* PROJECT LIST */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[1, 2, 3, 4].map(i => (
-                <Skeleton key={i} className="w-full h-[400px] rounded-3xl" />
-              ))}
+            <div className="space-y-8">
+              {[1, 2].map(i => <Skeleton key={i} className="w-full h-72 rounded-2xl" />)}
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {projects?.map((project, index) => (
-                <motion.div 
+            <div className="space-y-8">
+              {(projects ?? []).map((project, i) => (
+                <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="group border border-border hover:border-[#00C4D4]/40 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-black/5 transition-all duration-300"
                 >
-                  <Link href={`/projects/${project.id}`} className="block h-full group">
-                    <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-all h-full flex flex-col">
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
-                          {project.category}
-                        </span>
-                        {project.countries.map(c => (
-                          <span key={c} className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
-                            {c}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  {/* Dark header */}
+                  <div className="bg-[#080E1C] px-8 py-6 flex flex-wrap items-center gap-3">
+                    {project.countries.map((c: string) => (
+                      <span key={c} className="px-2.5 py-1 text-xs font-medium rounded-full bg-white/10 text-white/70">
+                        {c}
+                      </span>
+                    ))}
+                    <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-[#00C4D4]/20 text-[#00C4D4]">
+                      {project.category}
+                    </span>
+                    {project.status && (
+                      <span className="ml-auto text-xs text-white/40 font-medium">{project.status}</span>
+                    )}
+                  </div>
+
+                  {/* Body */}
+                  <div className="p-8 md:p-10 flex flex-col lg:flex-row gap-10">
+                    <div className="flex-1">
+                      <h2 className="font-display text-3xl md:text-4xl text-[#080E1C] mb-4 leading-snug group-hover:text-[#00C4D4] transition-colors">
                         {lang === "fr" ? project.titleFr : project.titleEn}
-                      </h3>
-                      
-                      <p className="text-muted-foreground mb-8 flex-1">
+                      </h2>
+                      <p className="text-muted-foreground leading-relaxed mb-6">
                         {lang === "fr" ? project.taglineFr : project.taglineEn}
                       </p>
-                      
-                      <div className="grid grid-cols-2 gap-4 pt-6 border-t border-border mt-auto">
-                        <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t("Budget", "Budget")}</p>
-                          <p className="font-semibold text-foreground">{project.budget}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t("Bailleur", "Funder")}</p>
-                          <p className="font-semibold text-foreground">{project.funder}</p>
-                        </div>
-                      </div>
+                      {(lang === "fr" ? project.descriptionFr : project.descriptionEn) && (
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {lang === "fr" ? project.descriptionFr : project.descriptionEn}
+                        </p>
+                      )}
                     </div>
-                  </Link>
+                    {/* Metrics */}
+                    <div className="lg:w-64 shrink-0 flex flex-col gap-6">
+                      <div className="border border-border rounded-xl p-5">
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                          {t("Budget total", "Total budget")}
+                        </p>
+                        <p className="font-display text-2xl text-[#080E1C]">{project.budget}</p>
+                      </div>
+                      <div className="border border-border rounded-xl p-5">
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                          {t("Bailleur de fonds", "Funder")}
+                        </p>
+                        <p className="font-bold text-[#080E1C]">{project.funder}</p>
+                      </div>
+                      {project.year && (
+                        <div className="border border-border rounded-xl p-5">
+                          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                            {t("Année", "Year")}
+                          </p>
+                          <p className="font-bold text-[#080E1C]">{project.year}</p>
+                        </div>
+                      )}
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center gap-2 bg-[#00C4D4] hover:bg-[#00b0bf] text-white text-sm font-semibold px-5 py-3 rounded-xl transition-colors"
+                      >
+                        {t("Projet similaire ?", "Similar project?")}
+                        <ArrowUpRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
           )}
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-[#F7F8FA] border-t border-border">
+        <div className="container mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <h2 className="font-display text-3xl md:text-4xl text-[#080E1C] mb-3">
+              {t("Vous avez un projet en tête ?", "Have a project in mind?")}
+            </h2>
+            <p className="text-muted-foreground max-w-xl">
+              {t(
+                "Partagez votre vision et découvrons ensemble comment Atlas peut vous accompagner.",
+                "Share your vision and let's discover together how Atlas can support you."
+              )}
+            </p>
+          </div>
+          <Link
+            href="/contact"
+            className="shrink-0 inline-flex items-center gap-2 bg-[#080E1C] hover:bg-[#0f1829] text-white font-semibold px-8 py-4 rounded-full text-sm transition-all duration-200 hover:-translate-y-0.5"
+          >
+            {t("Discutons-en", "Let's discuss")}
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 }

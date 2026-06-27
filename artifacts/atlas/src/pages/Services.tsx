@@ -2,121 +2,155 @@ import { useLanguage } from "@/hooks/use-language";
 import { useListServices } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronRight, Layers, Settings, Leaf, Globe, Briefcase } from "lucide-react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+
+const SERVICE_BULLETS: Record<number, { fr: string[]; en: string[] }> = {
+  0: {
+    fr: ["Études de faisabilité", "Planification stratégique", "Analyse de marché", "Positionnement concurrentiel"],
+    en: ["Feasibility studies", "Strategic planning", "Market analysis", "Competitive positioning"],
+  },
+  1: {
+    fr: ["Pilotage de projets complexes", "Gestion des parties prenantes", "Suivi-évaluation", "Rapportage bailleur"],
+    en: ["Complex project management", "Stakeholder management", "Monitoring & evaluation", "Funder reporting"],
+  },
+  2: {
+    fr: ["Réforme organisationnelle", "Renforcement des capacités", "Gouvernance publique", "Gestion du changement"],
+    en: ["Organizational reform", "Capacity building", "Public governance", "Change management"],
+  },
+  3: {
+    fr: ["Analyse de compétitivité", "Développement des exportations", "Accès aux marchés", "Stratégie d'investissement"],
+    en: ["Competitiveness analysis", "Export development", "Market access", "Investment strategy"],
+  },
+  4: {
+    fr: ["Finance climatique", "Transition énergétique", "Éducation résiliente", "Projets à impact social"],
+    en: ["Climate finance", "Energy transition", "Resilient education", "Social impact projects"],
+  },
+};
 
 export default function Services() {
   const { t, lang } = useLanguage();
   const { data: services, isLoading } = useListServices();
 
-  const getIconForIndex = (index: number) => {
-    const icons = [Settings, Layers, Leaf, Globe, Briefcase];
-    const Icon = icons[index % icons.length];
-    return <Icon className="w-8 h-8" />;
-  };
-
   return (
     <div className="w-full">
-      <section className="bg-foreground text-background py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-white">
-              {t("Nos Domaines d'Intervention", "Our Areas of Intervention")}
-            </h1>
-            <p className="text-xl text-zinc-400">
-              {t(
-                "Des solutions sur mesure conçues pour la résilience et la compétitivité à l'échelle globale.",
-                "Customized solutions designed for resilience and competitiveness on a global scale."
-              )}
-            </p>
+
+      {/* HERO */}
+      <section className="relative min-h-[55vh] flex items-end bg-[#080E1C] pb-16 pt-40 overflow-hidden">
+        <div className="absolute inset-0 hero-grid opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_20%,rgba(0,196,212,0.1),transparent)]" />
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4 flex items-center gap-3">
+            <span className="w-6 h-px bg-[#00C4D4]" />
+            <span className="text-[#00C4D4] text-xs font-semibold tracking-[0.2em] uppercase">{t("Services", "Services")}</span>
           </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl text-white leading-tight max-w-3xl"
+          >
+            {t("Cinq domaines d'expertise", "Five areas of expertise")}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 text-white/55 text-lg max-w-2xl leading-relaxed"
+          >
+            {t(
+              "Des solutions sur mesure, conçues pour la résilience et la compétitivité à l'échelle globale.",
+              "Customized solutions designed for resilience and competitiveness on a global scale."
+            )}
+          </motion.p>
         </div>
       </section>
 
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6">
+      {/* SERVICE LIST */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
           {isLoading ? (
-            <div className="space-y-12">
-              {[1, 2, 3].map(i => (
-                <Skeleton key={i} className="w-full h-64 rounded-3xl" />
-              ))}
+            <div className="space-y-8">
+              {[1, 2, 3].map(i => <Skeleton key={i} className="w-full h-48 rounded-2xl" />)}
             </div>
           ) : (
-            <div className="space-y-16">
-              {services?.map((service, index) => (
-                <motion.div 
-                  key={service.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className="bg-card border border-border rounded-3xl p-8 md:p-12 shadow-sm flex flex-col md:flex-row gap-12"
-                >
-                  <div className="md:w-1/3">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-8">
-                      {getIconForIndex(index)}
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                      {lang === "fr" ? service.titleFr : service.titleEn}
-                    </h2>
-                    <p className="text-primary font-medium mb-6">
-                      {lang === "fr" ? service.taglineFr : service.taglineEn}
-                    </p>
-                  </div>
-                  
-                  <div className="md:w-2/3 flex flex-col">
-                    <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                      {lang === "fr" ? service.descriptionFr : service.descriptionEn}
-                    </p>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-4 uppercase tracking-wider text-xs">
-                          {t("Livrables clés", "Key Deliverables")}
-                        </h4>
-                        <ul className="space-y-2">
-                          {(lang === "fr" ? service.deliverablesFr : service.deliverablesEn).map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                              <span className="text-primary mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-4 uppercase tracking-wider text-xs">
-                          {t("Exemples de mandats", "Mandate Examples")}
-                        </h4>
-                        <ul className="space-y-2">
-                          {(lang === "fr" ? service.mandateExamplesFr : service.mandateExamplesEn).map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                              <span className="text-primary mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+            <div className="space-y-6">
+              {(services ?? []).map((service, i) => {
+                const bullets = SERVICE_BULLETS[i] ?? { fr: [], en: [] };
+                return (
+                  <motion.div
+                    key={service.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06, duration: 0.55 }}
+                  >
+                    <div className="group bg-white border border-border hover:border-[#00C4D4]/40 rounded-2xl p-8 md:p-10 hover:shadow-xl hover:shadow-black/5 transition-all duration-300">
+                      <div className="flex flex-col lg:flex-row lg:items-start gap-8">
+                        {/* Left: number + title */}
+                        <div className="lg:w-80 shrink-0">
+                          <div className="font-display text-6xl text-[#F0F1F5] leading-none mb-4">
+                            {String(i + 1).padStart(2, "0")}
+                          </div>
+                          <h2 className="font-bold text-2xl text-[#080E1C] group-hover:text-[#00C4D4] transition-colors mb-2">
+                            {lang === "fr" ? service.titleFr : service.titleEn}
+                          </h2>
+                          <div className="w-8 h-0.5 bg-[#00C4D4] mb-4 transition-all duration-300 group-hover:w-16" />
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {lang === "fr" ? service.taglineFr : service.taglineEn}
+                          </p>
+                        </div>
+                        {/* Right: bullets + CTA */}
+                        <div className="flex-1">
+                          {(lang === "fr" ? service.descriptionFr : service.descriptionEn) && (
+                            <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
+                              {lang === "fr" ? service.descriptionFr : service.descriptionEn}
+                            </p>
+                          )}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                            {(lang === "fr" ? bullets.fr : bullets.en).map((b, bi) => (
+                              <div key={bi} className="flex items-center gap-2.5">
+                                <CheckCircle2 className="w-4 h-4 text-[#00C4D4] shrink-0" />
+                                <span className="text-sm text-muted-foreground">{b}</span>
+                              </div>
+                            ))}
+                          </div>
+                          <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#00C4D4] hover:text-[#00a3b0] transition-colors"
+                          >
+                            {t("Discuter de ce service", "Discuss this service")}
+                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="mt-auto pt-8 border-t border-border">
-                      <Button variant="outline" className="group" asChild>
-                        <Link href="/contact">
-                          {t("Discuter d'un mandat", "Discuss a mandate")}
-                          <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           )}
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-[#F7F8FA] border-t border-border">
+        <div className="container mx-auto px-6 lg:px-8 text-center">
+          <h2 className="font-display text-4xl md:text-5xl text-[#080E1C] mb-6">
+            {t("Vous avez un besoin spécifique ?", "Have a specific need?")}
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+            {t(
+              "Chaque mandat est unique. Parlons de votre situation et construisons ensemble la bonne réponse.",
+              "Every mandate is unique. Let's discuss your situation and build the right response together."
+            )}
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-[#080E1C] hover:bg-[#0f1829] text-white font-semibold px-8 py-4 rounded-full text-sm transition-all duration-200 hover:-translate-y-0.5"
+          >
+            {t("Nous contacter", "Contact us")}
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 }
