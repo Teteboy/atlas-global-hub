@@ -1,133 +1,108 @@
 import { Link } from "wouter";
 import { useLanguage } from "@/hooks/use-language";
-import logo from "@assets/Atlas_Global_Resilience_Corp._1782516926969.png";
-import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 
-export function Footer() {
+const LINKS = (t: (fr: string, en: string) => string) => [
+  {
+    title: t("Services", "Services"),
+    links: [
+      { label: t("Économie Numérique", "Digital Economy"), href: "/services" },
+      { label: t("Gouvernance", "Governance"), href: "/services" },
+      { label: t("Finance Verte", "Green Finance"), href: "/services" },
+      { label: t("Éducation", "Education"), href: "/services" },
+      { label: t("Coopération", "Cooperation"), href: "/services" },
+    ],
+  },
+  {
+    title: t("Corridors", "Corridors"),
+    links: [
+      { label: "Canada–Cameroun", href: "/sectors" },
+      { label: "Canada–Nigéria", href: "/sectors" },
+      { label: t("Afrique Régionale", "Regional Africa"), href: "/sectors" },
+      { label: t("Transatlantique", "Transatlantic"), href: "/sectors" },
+    ],
+  },
+  {
+    title: t("Entreprise", "Company"),
+    links: [
+      { label: t("À propos", "About"), href: "/about" },
+      { label: t("Réalisations", "Projects"), href: "/projects" },
+      { label: t("Perspectives", "Insights"), href: "/insights" },
+      { label: t("Contact", "Contact"), href: "/contact" },
+    ],
+  },
+];
+
+export default function Footer() {
   const { t } = useLanguage();
-  const year = new Date().getFullYear();
-
-  const navLinks = [
-    { href: "/about", label: t("À propos", "About") },
-    { href: "/services", label: t("Services", "Services") },
-    { href: "/sectors", label: t("Secteurs & Corridors", "Sectors & Corridors") },
-    { href: "/projects", label: t("Réalisations", "Projects") },
-    { href: "/insights", label: t("Perspectives", "Insights") },
-    { href: "/contact", label: t("Contact", "Contact") },
-  ];
-
-  const expertise = [
-    t("Conseil stratégique", "Strategic advisory"),
-    t("Assistance à la mise en œuvre", "Implementation support"),
-    t("Transformation institutionnelle", "Institutional transformation"),
-    t("Partenariats complexes", "Complex partnerships"),
-    t("Gouvernance & Résilience", "Governance & Resilience"),
-    t("Finance verte & Climat", "Green finance & Climate"),
-  ];
 
   return (
-    <footer className="bg-[#060C19] text-white">
-      {/* Top bar */}
-      <div className="border-b border-white/10">
-        <div className="container mx-auto px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {/* Brand column */}
-            <div className="lg:col-span-1">
-              <Link href="/">
-                <img
-                  src={logo}
-                  alt="Atlas Global Resilience Corp."
-                  className="h-10 mb-6 object-contain"
-                />
-              </Link>
-              <p className="text-white/50 text-sm leading-relaxed mb-6">
-                {t(
-                  "Firme internationale de conseil stratégique, structurant des initiatives à fort impact entre le Canada, l'Afrique et leurs partenaires.",
-                  "International strategic advisory firm, structuring high-impact initiatives between Canada, Africa and their partners."
-                )}
-              </p>
-              <div className="flex flex-col gap-3 text-sm text-white/50">
-                <a
-                  href="mailto:contact@atlas-grc.com"
-                  className="flex items-center gap-2 hover:text-[#00C4D4] transition-colors"
-                >
-                  <Mail className="w-4 h-4 shrink-0" />
-                  contact@atlas-grc.com
-                </a>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 shrink-0" />
-                  Canada · Afrique · International
-                </div>
+    <footer className="bg-[#080E1C] text-white relative overflow-hidden">
+      {/* Top image band */}
+      <div className="relative h-40 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1920&q=80"
+          alt="Atlas Global"
+          className="w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#080E1C]" />
+        <div className="absolute inset-0 flex items-center container mx-auto px-6 lg:px-8">
+          <p className="font-display text-2xl md:text-3xl text-white/70 max-w-2xl leading-snug">
+            {t(
+              "Bâtir des partenariats durables entre le Canada, l'Afrique et le monde.",
+              "Building lasting partnerships between Canada, Africa and the world."
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Main footer */}
+      <div className="container mx-auto px-6 lg:px-8 pt-16 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-9 h-9 bg-[#00C4D4] rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0">A</div>
+              <div>
+                <div className="font-bold text-white text-sm">Atlas Global</div>
+                <div className="text-white/40 text-xs">Resilience Corp.</div>
               </div>
             </div>
+            <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
+              {t(
+                "Firme internationale de conseil stratégique opérant à l'intersection du Canada, de l'Afrique et de leurs partenaires mondiaux.",
+                "International strategic advisory firm operating at the intersection of Canada, Africa and their global partners."
+              )}
+            </p>
+            <Link href="/contact"
+              className="inline-flex items-center gap-2 bg-[#00C4D4] hover:bg-[#00b0bf] text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-colors">
+              {t("Nous contacter", "Contact us")} →
+            </Link>
+          </div>
 
-            {/* Navigation */}
-            <div>
-              <h3 className="text-xs font-semibold tracking-widest uppercase text-white/30 mb-6">
-                {t("Navigation", "Navigation")}
-              </h3>
+          {/* Links */}
+          {LINKS(t).map((col, i) => (
+            <div key={i}>
+              <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-5">{col.title}</h4>
               <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/55 hover:text-white transition-colors flex items-center gap-1 group"
-                    >
+                {col.links.map((link, li) => (
+                  <li key={li}>
+                    <Link href={link.href}
+                      className="text-white/40 hover:text-[#00C4D4] text-sm transition-colors">
                       {link.label}
-                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-
-            {/* Expertise */}
-            <div>
-              <h3 className="text-xs font-semibold tracking-widest uppercase text-white/30 mb-6">
-                {t("Expertise", "Expertise")}
-              </h3>
-              <ul className="space-y-3">
-                {expertise.map((item, i) => (
-                  <li key={i} className="text-sm text-white/55">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* CTA */}
-            <div>
-              <h3 className="text-xs font-semibold tracking-widest uppercase text-white/30 mb-6">
-                {t("Travaillons ensemble", "Let's work together")}
-              </h3>
-              <p className="text-sm text-white/50 mb-6 leading-relaxed">
-                {t(
-                  "Vous avez un projet ? Prenons le temps d'en discuter.",
-                  "Have a project? Let's take the time to discuss it."
-                )}
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-[#00C4D4] hover:bg-[#00b0bf] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
-              >
-                {t("Nous contacter", "Contact us")}
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="container mx-auto px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-white/30">
-          &copy; {year} Atlas Global Resilience Corp.{" "}
-          {t("Tous droits réservés.", "All rights reserved.")}
-        </p>
-        <div className="flex items-center gap-6">
-          <span className="text-xs text-white/20">
-            Canada · Cameroun · Nigéria · International
-          </span>
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30">
+          <span>© 2024 Atlas Global Resilience Corp. {t("Tous droits réservés.", "All rights reserved.")}</span>
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00C4D4]" />
+            <span className="text-[#00C4D4]/60">{t("Canada · Cameroun · Nigéria · International", "Canada · Cameroon · Nigeria · International")}</span>
+          </div>
         </div>
       </div>
     </footer>
