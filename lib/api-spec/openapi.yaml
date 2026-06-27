@@ -3,13 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Atlas Global Resilience Corp. API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: services
+    description: Service offerings
+  - name: projects
+    description: Project achievements and case studies
+  - name: insights
+    description: Articles and strategic notes
+  - name: sectors
+    description: Sectors and corridors
+  - name: contact
+    description: Contact and inquiries
+  - name: stats
+    description: Site statistics
+
 paths:
   /healthz:
     get:
@@ -24,6 +37,200 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List all service baskets
+      responses:
+        "200":
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+
+  /services/{id}:
+    get:
+      operationId: getService
+      tags: [services]
+      summary: Get service detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Service detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "404":
+          description: Not found
+
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List all project achievements
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+
+  /projects/{id}:
+    get:
+      operationId: getProject
+      tags: [projects]
+      summary: Get project detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Project detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          description: Not found
+
+  /insights:
+    get:
+      operationId: listInsights
+      tags: [insights]
+      summary: List published insights and articles
+      parameters:
+        - name: lang
+          in: query
+          schema:
+            type: string
+            enum: [fr, en]
+      responses:
+        "200":
+          description: List of insights
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Insight"
+    post:
+      operationId: createInsight
+      tags: [insights]
+      summary: Publish a new insight
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsightInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Insight"
+
+  /insights/{id}:
+    get:
+      operationId: getInsight
+      tags: [insights]
+      summary: Get insight detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Insight detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Insight"
+        "404":
+          description: Not found
+
+  /sectors:
+    get:
+      operationId: listSectors
+      tags: [sectors]
+      summary: List sectors and corridors
+      responses:
+        "200":
+          description: List of sectors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sector"
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a contact inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactSubmission"
+
+  /contact/submissions:
+    get:
+      operationId: listContactSubmissions
+      tags: [contact]
+      summary: List contact submissions (admin)
+      responses:
+        "200":
+          description: List of submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactSubmission"
+
+  /stats:
+    get:
+      operationId: getSiteStats
+      tags: [stats]
+      summary: Get site-wide statistics summary
+      responses:
+        "200":
+          description: Site stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +241,250 @@ components:
       required:
         - status
 
+    Service:
+      type: object
+      required: [id, slug, titleFr, titleEn, taglineFr, taglineEn, descriptionFr, descriptionEn, icon, color, deliverablesFr, deliverablesEn, mandateExamplesFr, mandateExamplesEn, order]
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        titleFr:
+          type: string
+        titleEn:
+          type: string
+        taglineFr:
+          type: string
+        taglineEn:
+          type: string
+        descriptionFr:
+          type: string
+        descriptionEn:
+          type: string
+        icon:
+          type: string
+        color:
+          type: string
+        deliverablesFr:
+          type: array
+          items:
+            type: string
+        deliverablesEn:
+          type: array
+          items:
+            type: string
+        mandateExamplesFr:
+          type: array
+          items:
+            type: string
+        mandateExamplesEn:
+          type: array
+          items:
+            type: string
+        order:
+          type: integer
+        createdAt:
+          type: string
+
+    Project:
+      type: object
+      required: [id, titleFr, titleEn, taglineFr, taglineEn, challengeFr, challengeEn, approachFr, approachEn, scopeFr, scopeEn, resultFr, resultEn, countries, duration, budget, funder, category, featured]
+      properties:
+        id:
+          type: integer
+        titleFr:
+          type: string
+        titleEn:
+          type: string
+        taglineFr:
+          type: string
+        taglineEn:
+          type: string
+        challengeFr:
+          type: string
+        challengeEn:
+          type: string
+        approachFr:
+          type: string
+        approachEn:
+          type: string
+        scopeFr:
+          type: string
+        scopeEn:
+          type: string
+        resultFr:
+          type: string
+        resultEn:
+          type: string
+        countries:
+          type: array
+          items:
+            type: string
+        duration:
+          type: string
+        budget:
+          type: string
+        funder:
+          type: string
+        category:
+          type: string
+        featured:
+          type: boolean
+        imageUrl:
+          type: ["string", "null"]
+        ctaLabelFr:
+          type: ["string", "null"]
+        ctaLabelEn:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    Insight:
+      type: object
+      required: [id, titleFr, titleEn, summaryFr, summaryEn, bodyFr, bodyEn, category, publishedAt, featured]
+      properties:
+        id:
+          type: integer
+        titleFr:
+          type: string
+        titleEn:
+          type: string
+        summaryFr:
+          type: string
+        summaryEn:
+          type: string
+        bodyFr:
+          type: string
+        bodyEn:
+          type: string
+        category:
+          type: string
+        imageUrl:
+          type: ["string", "null"]
+        publishedAt:
+          type: string
+        featured:
+          type: boolean
+        createdAt:
+          type: string
+
+    InsightInput:
+      type: object
+      required: [titleFr, titleEn, summaryFr, summaryEn, bodyFr, bodyEn, category]
+      properties:
+        titleFr:
+          type: string
+        titleEn:
+          type: string
+        summaryFr:
+          type: string
+        summaryEn:
+          type: string
+        bodyFr:
+          type: string
+        bodyEn:
+          type: string
+        category:
+          type: string
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+
+    Sector:
+      type: object
+      required: [id, slug, titleFr, titleEn, descriptionFr, descriptionEn, icon, corridor, countries, highlights]
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        titleFr:
+          type: string
+        titleEn:
+          type: string
+        descriptionFr:
+          type: string
+        descriptionEn:
+          type: string
+        icon:
+          type: string
+        corridor:
+          type: string
+        countries:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+
+    ContactInput:
+      type: object
+      required: [name, organization, email, country, subject, needType, message]
+      properties:
+        name:
+          type: string
+        organization:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        subject:
+          type: string
+        needType:
+          type: string
+        message:
+          type: string
+        lang:
+          type: string
+          enum: [fr, en]
+
+    ContactSubmission:
+      type: object
+      required: [id, name, organization, email, country, subject, needType, message, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        organization:
+          type: string
+        email:
+          type: string
+        country:
+          type: string
+        subject:
+          type: string
+        needType:
+          type: string
+        message:
+          type: string
+        lang:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    SiteStats:
+      type: object
+      required: [totalProjects, totalServices, totalInsights, totalCountries, featuredProjects, recentInsights]
+      properties:
+        totalProjects:
+          type: integer
+        totalServices:
+          type: integer
+        totalInsights:
+          type: integer
+        totalCountries:
+          type: integer
+        featuredProjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Project"
+        recentInsights:
+          type: array
+          items:
+            $ref: "#/components/schemas/Insight"

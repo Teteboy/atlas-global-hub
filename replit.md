@@ -1,10 +1,11 @@
-# [Project name]
+# Atlas Global Resilience Corp.
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A bilingual (FR/EN) full-stack corporate website for Atlas Global Resilience Corp. — an international consulting firm bridging Canada, Africa and transatlantic partners in strategic development, digital transformation, climate action, education, and governance.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/atlas run dev` — run the frontend (port 20388)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -14,7 +15,8 @@ _Replace the heading above with the project's name, and this line with one sente
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
+- Frontend: React + Vite, TailwindCSS, Framer Motion, wouter (routing), React Query
+- API: Express 5 (served at `/api`)
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
@@ -22,15 +24,28 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `lib/api-spec/openapi.yaml` — OpenAPI spec (source of truth)
+- `lib/db/src/schema/` — Drizzle table definitions (services, projects, insights, sectors, contact_submissions)
+- `artifacts/api-server/src/routes/` — Express route handlers
+- `artifacts/atlas/src/` — React frontend
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Contract-first API: OpenAPI spec → Orval codegen → typed React Query hooks + Zod validators
+- Bilingual (FR/EN) via a `useLanguage` React context — `t(fr, en)` helper on every visible string, default French
+- All 5 service baskets, projects, sectors, insights and contact submissions live in PostgreSQL with full CRUD
+- Stats endpoint (`/api/stats`) aggregates counts + featured items for the home page in one call
+- Frontend routing with wouter, layout shared via `AppLayout` with `Navbar` and `Footer`
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Home page: hero, credibility strip, 5 service baskets, Why Atlas pillars, sectors, featured projects, recent insights, CTA
+- About: mission, approach, leadership, why the name Atlas
+- Services: overview of 5 baskets + detail page per service
+- Sectors & Corridors: 4 geographic corridors (Canada–Cameroon, Canada–Nigeria, Regional Africa, Transatlantic)
+- Projects/Achievements: 2 featured case studies (REFUS-Carbone, Gouvernance inclusive)
+- Insights: 3 strategic articles (corridors, green finance, PMO)
+- Contact: validated form wired to backend, 48h response promise
 
 ## User preferences
 
@@ -38,7 +53,10 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- After any schema change: run `pnpm --filter @workspace/db run push` then restart the API server workflow
+- After any OpenAPI spec change: run `pnpm --filter @workspace/api-spec run codegen` then restart both workflows
+- The API server workflow name is `artifacts/api-server: API Server`
+- The frontend workflow name is `artifacts/atlas: web`
 
 ## Pointers
 
