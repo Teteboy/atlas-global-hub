@@ -53,10 +53,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-- After any schema change: run `pnpm --filter @workspace/db run push` then restart the API server workflow
-- After any OpenAPI spec change: run `pnpm --filter @workspace/api-spec run codegen` then restart both workflows
-- The API server workflow name is `artifacts/api-server: API Server`
-- The frontend workflow name is `artifacts/atlas: web`
+- After any schema change: run `pnpm --filter @workspace/db run push` then restart the API server
+- After any OpenAPI spec change: run `pnpm --filter @workspace/api-spec run codegen` then restart both servers
 
 ## Pointers
 
