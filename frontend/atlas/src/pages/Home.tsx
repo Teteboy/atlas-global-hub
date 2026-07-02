@@ -253,8 +253,8 @@ export default function Home() {
                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.55 }}
                   className="bg-white/5 border border-white/10 rounded-2xl p-7 hover:bg-white/8 hover:border-[#00C4D4]/30 transition-all duration-300 group">
-                  <div className="w-11 h-11 rounded-xl bg-[#00C4D4]/15 flex items-center justify-center mb-6 group-hover:bg-[#00C4D4]/25 transition-colors">
-                    <Icon className="w-5 h-5 text-[#00C4D4]" />
+                  <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-xl bg-[#00C4D4]/15 flex items-center justify-center mb-6 group-hover:bg-[#00C4D4]/25 transition-colors">
+                    <Icon className="w-6 h-6 lg:w-8 lg:h-8 text-[#00C4D4]" />
                   </div>
                   <h3 className="font-bold text-white mb-3">{pillar.title}</h3>
                   <p className="text-sm text-white/50 leading-relaxed">{pillar.desc}</p>

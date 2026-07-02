@@ -60,9 +60,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center gap-3">
               <img 
-                src="/crop-logo.png" 
+                src="/final-logo.jpeg" 
                 alt="Atlas Global Resilience Corp." 
-                className="h-12 w-auto object-contain"
+                className="h-24 w-auto object-contain"
               />
               <h1 className="text-xl font-bold text-gray-900">Atlas Admin</h1>
             </div>

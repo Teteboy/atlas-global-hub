@@ -57,11 +57,11 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-4 z-50 relative shrink-0 group">
           <div className="relative">
             <img
-              src="/crop-logo.png"
+              src="/final-logo.jpeg"
               alt="Atlas Global Resilience Corp."
               className={cn(
                 "w-auto object-contain transition-all duration-500",
-                isScrolled ? "h-11" : "h-13"
+                isScrolled ? "h-20" : "h-24"
               )}
             />
           </div>
@@ -173,7 +173,7 @@ export function Navbar() {
             <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00C4D4]/60 to-transparent" />
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
-                <img src="/crop-logo.png" alt="Atlas" className="h-10 w-auto object-contain" />
+                <img src="/final-logo.jpeg" alt="Atlas" className="h-20 w-auto object-contain" />
                 <div className="flex flex-col leading-tight">
                   <span className="text-white font-bold text-sm">Atlas Global</span>
                   <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>

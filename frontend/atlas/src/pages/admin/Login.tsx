@@ -38,9 +38,9 @@ export default function AdminLogin() {
           {/* Logo */}
           <div className="flex justify-center mb-8">
             <img 
-              src="/crop-logo.png" 
+              src="/final-logo.jpeg" 
               alt="Atlas Global Resilience Corp." 
-              className="h-24 w-auto object-contain"
+              className="h-48 w-auto object-contain"
             />
           </div>
 
