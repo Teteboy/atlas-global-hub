@@ -57,7 +57,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-4 z-50 relative shrink-0 group">
           <div className="relative">
             <img
-              src="/final-logo.jpeg"
+              src="/logo.jpeg"
               alt="Atlas Global Resilience Corp."
               className={cn(
                 "w-auto object-contain transition-all duration-500",
@@ -139,41 +139,74 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="lg:hidden z-50 text-white p-2 rounded-md hover:bg-white/10 transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={mobileMenuOpen ? "close" : "open"}
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
+        {/* Mobile controls */}
+        <div className="lg:hidden flex items-center gap-2">
+          {/* Language switcher — minimal pill */}
+          <div className="flex items-center rounded-md border border-white/15 overflow-hidden">
+            <button
+              onClick={() => setLang("fr")}
+              className={cn(
+                "px-2 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
+                lang === "fr"
+                  ? "bg-[#00C4D4] text-white"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              )}
             >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </motion.div>
-          </AnimatePresence>
-        </button>
+              FR
+            </button>
+            <div className="w-px h-4 bg-white/15" />
+            <button
+              onClick={() => setLang("en")}
+              className={cn(
+                "px-2 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
+                lang === "en"
+                  ? "bg-[#00C4D4] text-white"
+                  : "text-white/50 hover:text-white hover:bg-white/5"
+              )}
+            >
+              EN
+            </button>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            className="z-50 text-white p-2 rounded-md hover:bg-white/10 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={mobileMenuOpen ? "close" : "open"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              </motion.div>
+            </AnimatePresence>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-0 bg-[#040B18]/99 backdrop-blur-xl z-40 flex flex-col lg:hidden"
-          >
+          <>
+            {/* Prevent body scroll when menu is open */}
+            <div className="lg:hidden fixed inset-0 z-50" />
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="lg:hidden fixed inset-0 bg-[#040B18]/99 backdrop-blur-xl z-50 flex flex-col"
+            >
             {/* Mobile header */}
             <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00C4D4]/60 to-transparent" />
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
-                <img src="/final-logo.jpeg" alt="Atlas" className="h-20 w-auto object-contain" />
+                <img src="/logo.jpeg" alt="Atlas" className="h-20 w-auto object-contain" />
                 <div className="flex flex-col leading-tight">
                   <span className="text-white font-bold text-sm">Atlas Global</span>
                   <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>
@@ -214,33 +247,9 @@ export function Navbar() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="pt-8 flex flex-col gap-4"
+                transition={{ delay: 0.3 }}
+                className="pt-8"
               >
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setLang("fr")}
-                    className={cn(
-                      "flex-1 py-2.5 text-sm font-semibold rounded-md border transition-all",
-                      lang === "fr"
-                        ? "bg-[#00C4D4] text-white border-[#00C4D4]"
-                        : "text-white/50 border-white/15 hover:text-white hover:border-white/30"
-                    )}
-                  >
-                    Français
-                  </button>
-                  <button
-                    onClick={() => setLang("en")}
-                    className={cn(
-                      "flex-1 py-2.5 text-sm font-semibold rounded-md border transition-all",
-                      lang === "en"
-                        ? "bg-[#00C4D4] text-white border-[#00C4D4]"
-                        : "text-white/50 border-white/15 hover:text-white hover:border-white/30"
-                    )}
-                  >
-                    English
-                  </button>
-                </div>
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
@@ -250,7 +259,8 @@ export function Navbar() {
                 </Link>
               </motion.div>
             </nav>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

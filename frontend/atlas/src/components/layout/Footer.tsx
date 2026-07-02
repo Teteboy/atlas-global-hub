@@ -62,7 +62,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-5">
               <img 
-                src="/final-logo.jpeg" 
+                src="/logo.jpeg" 
                 alt="Atlas Global Resilience Corp." 
                 className="h-28 w-auto object-contain"
               />
