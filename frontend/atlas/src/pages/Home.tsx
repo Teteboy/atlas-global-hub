@@ -68,9 +68,9 @@ export default function Home() {
           <img
             src="https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13?auto=format&fit=crop&w=1920&q=80"
             alt="Global consulting"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#080E1C] via-[#080E1C]/90 to-[#080E1C]/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#080E1C]/40 via-[#080E1C]/30 to-[#080E1C]/20" />
         </div>
         {/* Grid overlay */}
         <div className="absolute inset-0 z-0 hero-grid opacity-60" />
