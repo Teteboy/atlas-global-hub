@@ -60,12 +60,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-4 mb-5">
               <img 
                 src="/logo.png" 
                 alt="Atlas Global Resilience Corp." 
                 className="h-28 w-auto object-contain"
               />
+              <div className="flex flex-col leading-tight">
+                <span className="text-white font-bold text-sm tracking-wide">Atlas Global</span>
+                <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>
+              </div>
             </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
               {t(
