@@ -65,7 +65,7 @@ export function Navbar() {
               )}
             />
           </div>
-          <div className="hidden lg:flex flex-col leading-tight">
+          <div className="flex flex-col leading-tight">
             <span className="text-white font-bold text-sm tracking-wide">
               Atlas Global
             </span>
