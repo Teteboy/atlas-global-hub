@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
@@ -18,19 +18,41 @@ export default function SectorForm() {
     imageUrl: "",
   });
 
+  useEffect(() => {
+    if (!isEdit) return;
+
+    fetch(`/api/sectors/${id}`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to load sector");
+        return response.json();
+      })
+      .then((sector) => {
+        setFormData({
+          slug: sector.slug ?? "",
+          titleFr: sector.titleFr ?? "",
+          titleEn: sector.titleEn ?? "",
+          descriptionFr: sector.descriptionFr ?? "",
+          descriptionEn: sector.descriptionEn ?? "",
+          corridor: sector.corridor ?? "",
+          imageUrl: "",
+        });
+      })
+      .catch(() => undefined);
+  }, [id, isEdit]);
+
   const mutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const url = isEdit 
-        ? `http://localhost:5000/api/sectors/${id}`
-        : `http://localhost:5000/api/sectors`;
-      
-      const response = await fetch(url, {
+    mutationFn: async ({ imageUrl: _imageUrl, ...data }: typeof formData) => {
+      const response = await fetch(isEdit ? `/api/sectors/${id}` : "/api/sectors", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          icon: "Globe2",
+          countries: [],
+          highlights: [],
+        }),
       });
-      
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) throw new Error("Failed to save sector");
       return response.json();
     },
     onSuccess: () => {
@@ -170,6 +192,7 @@ export default function SectorForm() {
               Cancel
             </button>
           </Link>
+          {mutation.isError && <p className="text-sm text-red-600">Unable to save the sector. Please try again.</p>}
           <button
             type="submit"
             disabled={mutation.isPending}

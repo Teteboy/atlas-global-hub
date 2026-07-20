@@ -10,7 +10,7 @@ export default function AdminServices() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await fetch(`http://localhost:5000/api/services/${id}`, {
+      const response = await fetch(`/api/services/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete");

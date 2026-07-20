@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
 
@@ -25,19 +25,60 @@ export default function ServiceForm() {
     order: 0,
   });
 
+  const { isLoading: isLoadingService } = useQuery({
+    queryKey: ["service", id],
+    enabled: isEdit,
+    queryFn: async () => {
+      const response = await fetch(`/api/services/${id}`);
+      if (!response.ok) throw new Error("Failed to load service");
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    if (!isEdit) return;
+
+    fetch(`/api/services/${id}`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to load service");
+        return response.json();
+      })
+      .then((service) => {
+        setFormData({
+          slug: service.slug ?? "",
+          titleFr: service.titleFr ?? "",
+          titleEn: service.titleEn ?? "",
+          taglineFr: service.taglineFr ?? "",
+          taglineEn: service.taglineEn ?? "",
+          descriptionFr: service.descriptionFr ?? "",
+          descriptionEn: service.descriptionEn ?? "",
+          icon: service.icon ?? "",
+          color: service.color ?? "#00C4D4",
+          deliverablesFr: (service.deliverablesFr ?? []).join(", "),
+          deliverablesEn: (service.deliverablesEn ?? []).join(", "),
+          mandateExamplesFr: (service.mandateExamplesFr ?? []).join(", "),
+          mandateExamplesEn: (service.mandateExamplesEn ?? []).join(", "),
+          order: service.order ?? 0,
+        });
+      })
+      .catch(() => undefined);
+  }, [id, isEdit]);
+
   const mutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const url = isEdit 
-        ? `http://localhost:5000/api/services/${id}`
-        : `http://localhost:5000/api/services`;
-      
-      const response = await fetch(url, {
+      const response = await fetch(isEdit ? `/api/services/${id}` : "/api/services", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          order: Number(data.order),
+          deliverablesFr: data.deliverablesFr.split(",").map((item) => item.trim()).filter(Boolean),
+          deliverablesEn: data.deliverablesEn.split(",").map((item) => item.trim()).filter(Boolean),
+          mandateExamplesFr: data.mandateExamplesFr.split(",").map((item) => item.trim()).filter(Boolean),
+          mandateExamplesEn: data.mandateExamplesEn.split(",").map((item) => item.trim()).filter(Boolean),
+        }),
       });
-      
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) throw new Error("Failed to save service");
       return response.json();
     },
     onSuccess: () => {
@@ -54,6 +95,10 @@ export default function ServiceForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  if (isLoadingService) {
+    return <div className="p-6">Loading service...</div>;
+  }
 
   return (
     <div className="p-6">
@@ -239,6 +284,7 @@ export default function ServiceForm() {
               Cancel
             </button>
           </Link>
+          {mutation.isError && <p className="text-sm text-red-600">Unable to save the service. Please try again.</p>}
           <button
             type="submit"
             disabled={mutation.isPending}

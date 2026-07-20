@@ -10,7 +10,7 @@ export default function AdminSectors() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await fetch(`http://localhost:5000/api/sectors/${id}`, {
+      const response = await fetch(`/api/sectors/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete");

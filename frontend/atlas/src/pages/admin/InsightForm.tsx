@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
@@ -21,19 +21,39 @@ export default function InsightForm() {
     featured: false,
   });
 
+  useEffect(() => {
+    if (!isEdit) return;
+
+    fetch(`/api/insights/${id}`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to load insight");
+        return response.json();
+      })
+      .then((insight) => {
+        setFormData({
+          slug: "",
+          titleFr: insight.titleFr ?? "",
+          titleEn: insight.titleEn ?? "",
+          summaryFr: insight.summaryFr ?? "",
+          summaryEn: insight.summaryEn ?? "",
+          bodyFr: insight.bodyFr ?? "",
+          bodyEn: insight.bodyEn ?? "",
+          category: insight.category ?? "",
+          imageUrl: insight.imageUrl ?? "",
+          featured: insight.featured ?? false,
+        });
+      })
+      .catch(() => undefined);
+  }, [id, isEdit]);
+
   const mutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const url = isEdit 
-        ? `http://localhost:5000/api/insights/${id}`
-        : `http://localhost:5000/api/insights`;
-      
-      const response = await fetch(url, {
+    mutationFn: async ({ slug: _slug, ...data }: typeof formData) => {
+      const response = await fetch(isEdit ? `/api/insights/${id}` : "/api/insights", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, imageUrl: data.imageUrl || null }),
       });
-      
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) throw new Error("Failed to save insight");
       return response.json();
     },
     onSuccess: () => {
@@ -215,6 +235,7 @@ export default function InsightForm() {
               Cancel
             </button>
           </Link>
+          {mutation.isError && <p className="text-sm text-red-600">Unable to save the insight. Please try again.</p>}
           <button
             type="submit"
             disabled={mutation.isPending}

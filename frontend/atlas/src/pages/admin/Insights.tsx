@@ -10,7 +10,7 @@ export default function AdminInsights() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await fetch(`http://localhost:5000/api/insights/${id}`, {
+      const response = await fetch(`/api/insights/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
@@ -22,19 +22,60 @@ export default function ProjectForm() {
     status: "completed",
   });
 
+  useEffect(() => {
+    if (!isEdit) return;
+
+    fetch(`/api/projects/${id}`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to load project");
+        return response.json();
+      })
+      .then((project) => {
+        setFormData({
+          slug: "",
+          titleFr: project.titleFr ?? "",
+          titleEn: project.titleEn ?? "",
+          category: project.category ?? "",
+          descriptionFr: project.taglineFr ?? project.challengeFr ?? "",
+          descriptionEn: project.taglineEn ?? project.challengeEn ?? "",
+          imageUrl: project.imageUrl ?? "",
+          client: project.funder ?? "",
+          location: (project.countries ?? []).join(", "),
+          year: project.duration ?? "",
+          status: project.featured ? "ongoing" : "completed",
+        });
+      })
+      .catch(() => undefined);
+  }, [id, isEdit]);
+
   const mutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const url = isEdit 
-        ? `http://localhost:5000/api/projects/${id}`
-        : `http://localhost:5000/api/projects`;
-      
-      const response = await fetch(url, {
+    mutationFn: async ({ slug: _slug, status, location, year, client, descriptionFr, descriptionEn, ...data }: typeof formData) => {
+      const response = await fetch(isEdit ? `/api/projects/${id}` : "/api/projects", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          taglineFr: descriptionFr,
+          taglineEn: descriptionEn,
+          challengeFr: descriptionFr,
+          challengeEn: descriptionEn,
+          approachFr: descriptionFr,
+          approachEn: descriptionEn,
+          scopeFr: descriptionFr,
+          scopeEn: descriptionEn,
+          resultFr: descriptionFr,
+          resultEn: descriptionEn,
+          countries: location.split(",").map((country) => country.trim()).filter(Boolean),
+          duration: year,
+          budget: "",
+          funder: client,
+          featured: status === "ongoing",
+          imageUrl: data.imageUrl || null,
+          ctaLabelFr: null,
+          ctaLabelEn: null,
+        }),
       });
-      
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) throw new Error("Failed to save project");
       return response.json();
     },
     onSuccess: () => {
@@ -228,6 +269,7 @@ export default function ProjectForm() {
               Cancel
             </button>
           </Link>
+          {mutation.isError && <p className="text-sm text-red-600">Unable to save the project. Please try again.</p>}
           <button
             type="submit"
             disabled={mutation.isPending}
