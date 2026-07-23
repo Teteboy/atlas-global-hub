@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { db, servicesTable } from "@workspace/db";
+import { db, servicesTable, insertServiceSchema } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { requireAuth } from "../middleware/auth";
 
 const router = Router();
+
+const updateServiceSchema = insertServiceSchema.partial();
 
 router.get("/services", async (req, res) => {
   try {
@@ -10,16 +13,16 @@ router.get("/services", async (req, res) => {
       .select()
       .from(servicesTable)
       .orderBy(servicesTable.order);
-    res.json(services);
+    return res.json(services);
   } catch (err) {
     req.log.error({ err }, "Failed to list services");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 router.get("/services/:id", async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
 
     const [service] = await db
@@ -29,51 +32,61 @@ router.get("/services/:id", async (req, res) => {
       .limit(1);
 
     if (!service) return res.status(404).json({ error: "Not found" });
-    res.json(service);
+    return res.json(service);
   } catch (err) {
     req.log.error({ err }, "Failed to get service");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Create service
-router.post("/services", async (req, res) => {
+router.post("/services", requireAuth, async (req, res) => {
   try {
+    const parsed = insertServiceSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid input", details: parsed.error });
+    }
+
     const service = await db
       .insert(servicesTable)
-      .values(req.body)
+      .values(parsed.data)
       .returning();
-    res.status(201).json(service[0]);
+    return res.status(201).json(service[0]);
   } catch (err) {
     req.log.error({ err }, "Failed to create service");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Update service
-router.put("/services/:id", async (req, res) => {
+router.put("/services/:id", requireAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
+
+    const parsed = updateServiceSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid input", details: parsed.error });
+    }
 
     const service = await db
       .update(servicesTable)
-      .set(req.body)
+      .set(parsed.data)
       .where(eq(servicesTable.id, id))
       .returning();
 
     if (!service.length) return res.status(404).json({ error: "Not found" });
-    res.json(service[0]);
+    return res.json(service[0]);
   } catch (err) {
     req.log.error({ err }, "Failed to update service");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Delete service
-router.delete("/services/:id", async (req, res) => {
+router.delete("/services/:id", requireAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
 
     const service = await db
@@ -82,10 +95,10 @@ router.delete("/services/:id", async (req, res) => {
       .returning();
 
     if (!service.length) return res.status(404).json({ error: "Not found" });
-    res.json({ message: "Deleted successfully" });
+    return res.json({ message: "Deleted successfully" });
   } catch (err) {
     req.log.error({ err }, "Failed to delete service");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

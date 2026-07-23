@@ -36,7 +36,7 @@ router.get("/stats", async (req, res) => {
     const allProjects = await db.select({ countries: projectsTable.countries }).from(projectsTable);
     const uniqueCountries = new Set(allProjects.flatMap((p) => p.countries));
 
-    res.json({
+    return res.json({
       totalProjects: projects[0]?.count ?? 0,
       totalServices: services[0]?.count ?? 0,
       totalInsights: insights[0]?.count ?? 0,
@@ -46,7 +46,7 @@ router.get("/stats", async (req, res) => {
     });
   } catch (err) {
     req.log.error({ err }, "Failed to get stats");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

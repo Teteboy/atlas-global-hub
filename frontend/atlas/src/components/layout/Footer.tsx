@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { useLanguage } from "@/hooks/use-language";
+import { useSiteContent } from "@/hooks/use-site-content";
 
 const LINKS = (t: (fr: string, en: string) => string) => [
   {
@@ -34,9 +35,13 @@ const LINKS = (t: (fr: string, en: string) => string) => [
 
 export default function Footer() {
   const { t } = useLanguage();
+  const { getSetting } = useSiteContent();
+  const dark = getSetting("theme.colorDark", "var(--color-atlas-dark)");
+  const primary = "var(--color-atlas-primary)";
+  const primaryHover = "var(--color-atlas-primary-hover)";
 
   return (
-    <footer className="bg-[#080E1C] text-white relative overflow-hidden">
+    <footer className={`bg-[var(--color-atlas-dark)] text-white relative overflow-hidden`}>
       {/* Top image band */}
       <div className="relative h-40 overflow-hidden">
         <img
@@ -44,7 +49,7 @@ export default function Footer() {
           alt="Atlas Global"
           className="w-full h-full object-cover opacity-15"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#080E1C]" />
+        <div className={`absolute inset-0 bg-gradient-to-b from-transparent to-[var(--color-atlas-dark)]`} />
         <div className="absolute inset-0 flex items-center container mx-auto px-6 lg:px-8">
           <p className="font-display text-2xl md:text-3xl text-white/70 max-w-2xl leading-snug">
             {t(
@@ -60,15 +65,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-4 mb-5">
+            <div className="flex items-center gap-2.5 mb-5">
               <img 
                 src="/logo.png" 
                 alt="Atlas Global Resilience Corp." 
                 className="h-28 w-auto object-contain"
               />
               <div className="flex flex-col leading-tight">
-                <span className="text-white font-bold text-sm tracking-wide">Atlas Global</span>
-                <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>
+                <span className="font-display text-white font-bold text-lg lg:text-xl tracking-wide">Atlas Global</span>
+                <span className={`text-[var(--color-atlas-primary)] text-xs lg:text-sm font-medium tracking-widest uppercase`}>Resilience Corp.</span>
               </div>
             </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
@@ -78,7 +83,7 @@ export default function Footer() {
               )}
             </p>
             <Link href="/contact"
-              className="inline-flex items-center gap-2 bg-[#00C4D4] hover:bg-[#00b0bf] text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-colors">
+              className={`inline-flex items-center gap-2 bg-[var(--color-atlas-primary)] hover:bg-[var(--color-atlas-primary-hover)] text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-colors`}>
               {t("Nous contacter", "Contact us")} →
             </Link>
           </div>
@@ -91,7 +96,7 @@ export default function Footer() {
                 {col.links.map((link, li) => (
                   <li key={li}>
                     <Link href={link.href}
-                      className="text-white/40 hover:text-[#00C4D4] text-sm transition-colors">
+                      className={`text-white/40 hover:text-[var(--color-atlas-primary)] text-sm transition-colors`}>
                       {link.label}
                     </Link>
                   </li>
@@ -104,8 +109,8 @@ export default function Footer() {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30">
           <span>© 2024 Atlas Global Resilience Corp. {t("Tous droits réservés.", "All rights reserved.")}</span>
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00C4D4]" />
-            <span className="text-[#00C4D4]/60">{t("Canada · Cameroun · Nigéria · International", "Canada · Cameroon · Nigeria · International")}</span>
+            <span className={`w-1.5 h-1.5 rounded-full bg-[var(--color-atlas-primary)]`} />
+            <span className={`text-[var(--color-atlas-primary)]/60`}>{t("Canada · Cameroun · Nigéria · International", "Canada · Cameroon · Nigeria · International")}</span>
           </div>
         </div>
       </div>

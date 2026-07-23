@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/hooks/use-language";
+import { SiteContentProvider } from "@/hooks/use-site-content";
+import { SiteTheme } from "@/components/SiteTheme";
 
 import AppLayout from "@/components/layout/AppLayout";
 import AdminLayout from "@/components/layout/AdminLayout";
@@ -20,16 +22,21 @@ import AdminProjects from "@/pages/admin/Projects";
 import AdminInsights from "@/pages/admin/Insights";
 import AdminSectors from "@/pages/admin/Sectors";
 import AdminLogin from "@/pages/admin/Login";
+import AdminContent from "@/pages/admin/Content";
+import AdminSettings from "@/pages/admin/Settings";
 import ServiceForm from "@/pages/admin/ServiceForm";
 import ProjectForm from "@/pages/admin/ProjectForm";
 import InsightForm from "@/pages/admin/InsightForm";
 import SectorForm from "@/pages/admin/SectorForm";
+import ProjectDetail from "@/pages/ProjectDetail";
+import InsightDetail from "@/pages/InsightDetail";
+import ServiceDetail from "@/pages/ServiceDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000,
+      staleTime: 2 * 60 * 1000,
       retry: 1,
     },
   },
@@ -107,6 +114,16 @@ function Router() {
           <SectorForm />
         </AdminLayout>
       </Route>
+      <Route path="/admin/content">
+        <AdminLayout>
+          <AdminContent />
+        </AdminLayout>
+      </Route>
+      <Route path="/admin/settings">
+        <AdminLayout>
+          <AdminSettings />
+        </AdminLayout>
+      </Route>
 
       {/* Public routes */}
       <AppLayout>
@@ -114,12 +131,12 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />
-          <Route path="/services/:id" component={Services} /> {/* Stubbing out for now */}
+          <Route path="/services/:id" component={ServiceDetail} />
           <Route path="/sectors" component={Sectors} />
           <Route path="/projects" component={Projects} />
-          <Route path="/projects/:id" component={Projects} /> {/* Stubbing out */}
+          <Route path="/projects/:id" component={ProjectDetail} />
           <Route path="/insights" component={Insights} />
-          <Route path="/insights/:id" component={Insights} /> {/* Stubbing out */}
+          <Route path="/insights/:id" component={InsightDetail} />
           <Route path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>
@@ -132,12 +149,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
+        <SiteContentProvider>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/,"")}>
+              <SiteTheme />
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </SiteContentProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );

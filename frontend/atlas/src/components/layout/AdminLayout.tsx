@@ -7,7 +7,9 @@ import {
   Globe, 
   LogOut,
   Menu,
-  X
+  X,
+  Type,
+  Settings
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -17,6 +19,8 @@ const navItems = [
   { label: "Projects", href: "/admin/projects", icon: FolderKanban },
   { label: "Insights", href: "/admin/insights", icon: FileText },
   { label: "Sectors", href: "/admin/sectors", icon: Globe },
+  { label: "Site Content", href: "/admin/content", icon: Type },
+  { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 interface AdminLayoutProps {
@@ -25,17 +29,26 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("adminAuthenticated");
-    if (!isAuthenticated) {
-      setLocation("/admin/login");
-    }
+    fetch("/api/auth/me", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.authenticated) {
+          setLocation("/admin/login");
+        }
+      })
+      .catch(() => setLocation("/admin/login"))
+      .finally(() => setCheckingAuth(false));
   }, [setLocation]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuthenticated");
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     setLocation("/admin/login");
   };
 

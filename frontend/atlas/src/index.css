@@ -64,6 +64,11 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --color-atlas-dark: var(--color-atlas-dark);
+  --color-atlas-primary: var(--color-atlas-primary);
+  --color-atlas-primary-hover: var(--color-atlas-primary-hover);
+  --color-atlas-light: var(--color-atlas-light);
 }
 
 :root {
@@ -72,6 +77,11 @@
   --opaque-button-border-intensity: -8;
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
+
+  --color-atlas-dark: #041b40;
+  --color-atlas-primary: #c1a768;
+  --color-atlas-primary-hover: #d4bb7a;
+  --color-atlas-light: #f5f0e6;
 
   --background: 0 0% 100%;
   --foreground: 220 52% 8%;
@@ -193,19 +203,19 @@
     font-family: "DM Serif Display", Georgia, serif;
   }
   .text-gradient {
-    background: linear-gradient(135deg, #00C4D4, #00a3b0);
+    background: linear-gradient(135deg, var(--color-atlas-primary), var(--color-atlas-primary-hover));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .hero-grid {
     background-image:
-      linear-gradient(rgba(0,196,212,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,196,212,0.06) 1px, transparent 1px);
+      linear-gradient(color-mix(in srgb, var(--color-atlas-primary) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-atlas-primary) 6%, transparent) 1px, transparent 1px);
     background-size: 80px 80px;
   }
   .section-dark {
-    background-color: #080E1C;
+    background-color: var(--color-atlas-dark);
     color: white;
   }
 }

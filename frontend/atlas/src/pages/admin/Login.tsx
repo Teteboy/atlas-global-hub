@@ -15,15 +15,25 @@ export default function AdminLogin() {
     setError("");
     setLoading(true);
 
-    // Simple authentication - in production, this would call an API
-    if (email === "admin@atlas.com" && password === "admin123") {
-      localStorage.setItem("adminAuthenticated", "true");
-      setLocation("/admin");
-    } else {
-      setError("Invalid credentials. Use admin@atlas.com / admin123");
-    }
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
 
-    setLoading(false);
+      if (res.ok) {
+        setLocation("/admin");
+      } else {
+        const data = await res.json().catch(() => ({ error: "Invalid credentials" }));
+        setError(data.error ?? "Invalid credentials");
+      }
+    } catch (err) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

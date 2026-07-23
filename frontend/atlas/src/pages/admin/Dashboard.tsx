@@ -1,26 +1,33 @@
 import { useLanguage } from "@/hooks/use-language";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { 
-  LayoutDashboard, 
-  Briefcase, 
-  FolderKanban, 
-  FileText, 
-  Globe, 
-  MessageSquare,
-  Users,
-  TrendingUp
+import { useGetSiteStats } from "@workspace/api-client-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Briefcase,
+  FolderKanban,
+  FileText,
+  Globe,
+  ArrowUpRight,
+  Clock
 } from "lucide-react";
 
-const stats = [
-  { label: "Services", value: "5", icon: Briefcase, color: "bg-blue-500", href: "/admin/services" },
-  { label: "Projects", value: "2", icon: FolderKanban, color: "bg-green-500", href: "/admin/projects" },
-  { label: "Insights", value: "6", icon: FileText, color: "bg-purple-500", href: "/admin/insights" },
-  { label: "Sectors", value: "4", icon: Globe, color: "bg-orange-500", href: "/admin/sectors" },
+const statConfig = [
+  { label: "Services", key: "totalServices", icon: Briefcase, color: "bg-emerald-500", href: "/admin/services" },
+  { label: "Projects", key: "totalProjects", icon: FolderKanban, color: "bg-blue-500", href: "/admin/projects" },
+  { label: "Insights", key: "totalInsights", icon: FileText, color: "bg-amber-500", href: "/admin/insights" },
+  { label: "Countries", key: "totalCountries", icon: Globe, color: "bg-violet-500", href: "/admin/sectors" },
 ];
 
 export default function AdminDashboard() {
-  const { t } = useLanguage();
+  const { lang } = useLanguage();
+  const { data: stats, isLoading } = useGetSiteStats();
+
+  const statValue = (key: string) => {
+    if (!stats) return "—";
+    const value = (stats as unknown as Record<string, unknown>)[key];
+    return typeof value === "number" ? value.toString() : "—";
+  };
 
   return (
     <div className="w-full min-h-screen bg-gray-50">
@@ -42,7 +49,7 @@ export default function AdminDashboard() {
       <div className="container mx-auto px-6 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, i) => (
+          {statConfig.map((stat, i) => (
             <Link key={i} href={stat.href}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -54,7 +61,11 @@ export default function AdminDashboard() {
                   <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center`}>
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-3xl font-bold text-gray-900">{stat.value}</span>
+                  {isLoading ? (
+                    <Skeleton className="w-12 h-8" />
+                  ) : (
+                    <span className="text-3xl font-bold text-gray-900">{statValue(stat.key)}</span>
+                  )}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">{stat.label}</h3>
                 <p className="text-sm text-gray-500 mt-1">Manage {stat.label.toLowerCase()}</p>
@@ -89,27 +100,51 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-green-600" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Featured Projects</h2>
+            {isLoading ? (
+              <div className="space-y-4">
+                {[1, 2].map(i => <Skeleton key={i} className="w-full h-16" />)}
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Database seeded successfully</p>
-                <p className="text-xs text-gray-500">Just now</p>
+            ) : !stats?.featuredProjects?.length ? (
+              <p className="text-sm text-gray-500">No featured projects.</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.featuredProjects.map((project) => (
+                  <Link key={project.id} href={`/admin/projects/${project.id}`} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{lang === "fr" ? project.titleFr : project.titleEn}</p>
+                      <p className="text-xs text-gray-500">{project.category}</p>
+                    </div>
+                    <ArrowUpRight className="w-4 h-4 text-gray-400" />
+                  </Link>
+                ))}
               </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                <LayoutDashboard className="w-5 h-5 text-blue-600" />
+            )}
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Insights</h2>
+            {isLoading ? (
+              <div className="space-y-4">
+                {[1, 2].map(i => <Skeleton key={i} className="w-full h-16" />)}
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Admin dashboard created</p>
-                <p className="text-xs text-gray-500">Just now</p>
+            ) : !stats?.recentInsights?.length ? (
+              <p className="text-sm text-gray-500">No recent insights.</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.recentInsights.map((insight) => (
+                  <Link key={insight.id} href={`/admin/insights/${insight.id}`} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{lang === "fr" ? insight.titleFr : insight.titleEn}</p>
+                      <p className="text-xs text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" /> {insight.category}</p>
+                    </div>
+                    <ArrowUpRight className="w-4 h-4 text-gray-400" />
+                  </Link>
+                ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

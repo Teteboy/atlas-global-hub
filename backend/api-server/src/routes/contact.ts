@@ -2,6 +2,7 @@ import { Router } from "express";
 import { db, contactSubmissionsTable } from "@workspace/db";
 import { desc } from "drizzle-orm";
 import { SubmitContactBody } from "@workspace/api-zod";
+import { requireAuth } from "../middleware/auth";
 
 const router = Router();
 
@@ -27,23 +28,23 @@ router.post("/contact", async (req, res) => {
       })
       .returning();
 
-    res.status(201).json(submission);
+    return res.status(201).json(submission);
   } catch (err) {
     req.log.error({ err }, "Failed to submit contact");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.get("/contact/submissions", async (req, res) => {
+router.get("/contact/submissions", requireAuth, async (req, res) => {
   try {
     const submissions = await db
       .select()
       .from(contactSubmissionsTable)
       .orderBy(desc(contactSubmissionsTable.createdAt));
-    res.json(submissions);
+    return res.json(submissions);
   } catch (err) {
     req.log.error({ err }, "Failed to list contact submissions");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

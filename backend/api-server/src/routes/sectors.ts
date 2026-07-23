@@ -1,22 +1,25 @@
 import { Router } from "express";
-import { db, sectorsTable } from "@workspace/db";
+import { db, sectorsTable, insertSectorSchema } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { requireAuth } from "../middleware/auth";
 
 const router = Router();
+
+const updateSectorSchema = insertSectorSchema.partial();
 
 router.get("/sectors", async (req, res) => {
   try {
     const sectors = await db.select().from(sectorsTable);
-    res.json(sectors);
+    return res.json(sectors);
   } catch (err) {
     req.log.error({ err }, "Failed to list sectors");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 router.get("/sectors/:id", async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
 
     const [sector] = await db
@@ -26,51 +29,61 @@ router.get("/sectors/:id", async (req, res) => {
       .limit(1);
 
     if (!sector) return res.status(404).json({ error: "Not found" });
-    res.json(sector);
+    return res.json(sector);
   } catch (err) {
     req.log.error({ err }, "Failed to get sector");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Create sector
-router.post("/sectors", async (req, res) => {
+router.post("/sectors", requireAuth, async (req, res) => {
   try {
+    const parsed = insertSectorSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid input", details: parsed.error });
+    }
+
     const sector = await db
       .insert(sectorsTable)
-      .values(req.body)
+      .values(parsed.data)
       .returning();
-    res.status(201).json(sector[0]);
+    return res.status(201).json(sector[0]);
   } catch (err) {
     req.log.error({ err }, "Failed to create sector");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Update sector
-router.put("/sectors/:id", async (req, res) => {
+router.put("/sectors/:id", requireAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
+
+    const parsed = updateSectorSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid input", details: parsed.error });
+    }
 
     const sector = await db
       .update(sectorsTable)
-      .set(req.body)
+      .set(parsed.data)
       .where(eq(sectorsTable.id, id))
       .returning();
 
     if (!sector.length) return res.status(404).json({ error: "Not found" });
-    res.json(sector[0]);
+    return res.json(sector[0]);
   } catch (err) {
     req.log.error({ err }, "Failed to update sector");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Admin: Delete sector
-router.delete("/sectors/:id", async (req, res) => {
+router.delete("/sectors/:id", requireAuth, async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id as string, 10);
     if (isNaN(id)) return res.status(400).json({ error: "Invalid id" });
 
     const sector = await db
@@ -79,10 +92,10 @@ router.delete("/sectors/:id", async (req, res) => {
       .returning();
 
     if (!sector.length) return res.status(404).json({ error: "Not found" });
-    res.json({ message: "Deleted successfully" });
+    return res.json({ message: "Deleted successfully" });
   } catch (err) {
     req.log.error({ err }, "Failed to delete sector");
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

@@ -41,12 +41,12 @@ export function Navbar() {
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-500",
         isScrolled
-          ? "bg-[#040B18]/98 backdrop-blur-2xl border-b border-white/8 shadow-2xl shadow-black/40"
+          ? "bg-[var(--color-atlas-dark)]/98 backdrop-blur-2xl border-b border-white/8 shadow-2xl shadow-black/40"
           : "bg-gradient-to-b from-black/30 to-transparent"
       )}
     >
       {/* Top accent bar */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00C4D4]/60 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-atlas-primary)]/60 to-transparent" />
 
       <div className={cn(
         "container mx-auto px-6 lg:px-10 flex items-center justify-between transition-all duration-500",
@@ -54,7 +54,7 @@ export function Navbar() {
       )}>
 
         {/* Logo + wordmark */}
-        <Link href="/" className="flex items-center gap-4 z-50 relative shrink-0 group">
+        <Link href="/" className="flex items-center gap-2.5 z-50 relative shrink-0 group">
           <div className="relative">
             <img
               src="/logo.png"
@@ -66,10 +66,10 @@ export function Navbar() {
             />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-white font-bold text-sm tracking-wide">
+            <span className="font-display text-white font-bold text-base lg:text-xl tracking-wide">
               Atlas Global
             </span>
-            <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">
+            <span className="text-[var(--color-atlas-primary)] text-xs lg:text-sm font-medium tracking-widest uppercase">
               Resilience Corp.
             </span>
           </div>
@@ -93,8 +93,8 @@ export function Navbar() {
                 className={cn(
                   "absolute bottom-0.5 left-4 right-4 h-px rounded-full transition-all duration-300",
                   isActive(link.href)
-                    ? "bg-[#00C4D4] opacity-100"
-                    : "bg-[#00C4D4] opacity-0 group-hover:opacity-40"
+                    ? "bg-[var(--color-atlas-primary)] opacity-100"
+                    : "bg-[var(--color-atlas-primary)] opacity-0 group-hover:opacity-40"
                 )}
               />
             </Link>
@@ -110,7 +110,7 @@ export function Navbar() {
               className={cn(
                 "px-3 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
                 lang === "fr"
-                  ? "bg-[#00C4D4] text-white"
+                  ? "bg-[var(--color-atlas-primary)] text-white"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >
@@ -122,7 +122,7 @@ export function Navbar() {
               className={cn(
                 "px-3 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
                 lang === "en"
-                  ? "bg-[#00C4D4] text-white"
+                  ? "bg-[var(--color-atlas-primary)] text-white"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >
@@ -133,7 +133,7 @@ export function Navbar() {
           {/* CTA */}
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 bg-[#00C4D4] hover:bg-[#00d4e6] text-white text-[13px] font-semibold px-5 py-2.5 rounded-md transition-all duration-200 shadow-lg shadow-[#00C4D4]/20 hover:shadow-[#00C4D4]/40 hover:-translate-y-px"
+            className="inline-flex items-center gap-2 bg-[var(--color-atlas-primary)] hover:bg-[var(--color-atlas-primary-hover)] text-white text-[13px] font-semibold px-5 py-2.5 rounded-md transition-all duration-200 shadow-lg shadow-[var(--color-atlas-primary)]/20 hover:shadow-[var(--color-atlas-primary)]/40 hover:-translate-y-px"
           >
             {t("Nous contacter", "Contact Us")}
           </Link>
@@ -148,7 +148,7 @@ export function Navbar() {
               className={cn(
                 "px-2 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
                 lang === "fr"
-                  ? "bg-[#00C4D4] text-white"
+                  ? "bg-[var(--color-atlas-primary)] text-white"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >
@@ -160,7 +160,7 @@ export function Navbar() {
               className={cn(
                 "px-2 py-1.5 text-[11px] font-bold tracking-widest uppercase transition-all duration-200",
                 lang === "en"
-                  ? "bg-[#00C4D4] text-white"
+                  ? "bg-[var(--color-atlas-primary)] text-white"
                   : "text-white/50 hover:text-white hover:bg-white/5"
               )}
             >
@@ -197,16 +197,16 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-0 bg-[#040B18]/99 backdrop-blur-xl z-40 flex flex-col lg:hidden"
+            className="fixed inset-0 bg-[var(--color-atlas-dark)]/99 backdrop-blur-xl z-[60] flex flex-col lg:hidden"
           >
             {/* Mobile header */}
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00C4D4]/60 to-transparent" />
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-atlas-primary)]/60 to-transparent" />
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/8">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="Atlas" className="h-20 w-auto object-contain" />
                 <div className="flex flex-col leading-tight">
-                  <span className="text-white font-bold text-sm">Atlas Global</span>
-                  <span className="text-[#00C4D4] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>
+                  <span className="font-display text-white font-bold text-base">Atlas Global</span>
+                  <span className="text-[var(--color-atlas-primary)] text-xs font-medium tracking-widest uppercase">Resilience Corp.</span>
                 </div>
               </Link>
               <button
@@ -230,12 +230,12 @@ export function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
                       "flex items-center justify-between py-4 text-base font-semibold border-b border-white/8 transition-colors",
-                      isActive(link.href) ? "text-[#00C4D4]" : "text-white/75 hover:text-white"
+                      isActive(link.href) ? "text-[var(--color-atlas-primary)]" : "text-white/75 hover:text-white"
                     )}
                   >
                     {link.label}
                     {isActive(link.href) && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00C4D4]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-atlas-primary)]" />
                     )}
                   </Link>
                 </motion.div>
@@ -250,7 +250,7 @@ export function Navbar() {
                 <Link
                   href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center bg-[#00C4D4] hover:bg-[#00d4e6] text-white font-semibold py-3 rounded-md transition-colors text-sm"
+                  className="w-full text-center bg-[var(--color-atlas-primary)] hover:bg-[var(--color-atlas-primary-hover)] text-white font-semibold py-3 rounded-md transition-colors text-sm"
                 >
                   {t("Nous contacter", "Contact Us")}
                 </Link>
