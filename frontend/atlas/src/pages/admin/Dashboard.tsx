@@ -15,7 +15,7 @@ import {
 const statConfig = [
   { label: "Services", key: "totalServices", icon: Briefcase, color: "bg-emerald-500", href: "/admin/services" },
   { label: "Projects", key: "totalProjects", icon: FolderKanban, color: "bg-blue-500", href: "/admin/projects" },
-  { label: "Insights", key: "totalInsights", icon: FileText, color: "bg-amber-500", href: "/admin/insights" },
+  { label: "Insights", key: "totalInsights", icon: FileText, color: "bg-[#00c4d4]", href: "/admin/insights" },
   { label: "Countries", key: "totalCountries", icon: Globe, color: "bg-violet-500", href: "/admin/sectors" },
 ];
 

@@ -73,7 +73,7 @@ async function seed() {
       descriptionFr: "Canada–Afrique, Canada–Europe–Afrique, notes stratégiques, partenariats, convening, local value creation.",
       descriptionEn: "Canada–Africa, Canada–Europe–Africa, strategic notes, partnerships, convening, local value creation.",
       icon: "globe",
-      color: "#F59E0B",
+      color: "#00C4D4",
       deliverablesFr: ["Corridors Canada–Afrique", "Corridors Canada–Europe–Afrique", "Notes stratégiques", "Partenariats", "Convening", "Local value creation"],
       deliverablesEn: ["Canada–Africa corridors", "Canada–Europe–Africa corridors", "Strategic notes", "Partnerships", "Convening", "Local value creation"],
       mandateExamplesFr: ["Corridors commerciaux", "Partenariats internationaux", "Positionnement stratégique"],

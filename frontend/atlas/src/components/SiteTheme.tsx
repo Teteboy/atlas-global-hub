@@ -3,8 +3,8 @@ import { useSiteContent } from "@/hooks/use-site-content";
 
 const DEFAULT_COLORS = {
   "--color-atlas-dark": "#041b40",
-  "--color-atlas-primary": "#c1a768",
-  "--color-atlas-primary-hover": "#d4bb7a",
+  "--color-atlas-primary": "#00c4d4",
+  "--color-atlas-primary-hover": "#00b0bf",
   "--color-atlas-light": "#f5f0e6",
 };
 

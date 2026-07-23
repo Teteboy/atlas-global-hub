@@ -14,8 +14,8 @@ async function fetchSettings(): Promise<SettingsResponse> {
 
 const themeFields = [
   { key: "theme.colorDark", label: "Dark / Brand Background", default: "#041b40" },
-  { key: "theme.colorPrimary", label: "Primary Accent", default: "#c1a768" },
-  { key: "theme.colorPrimaryHover", label: "Primary Accent Hover", default: "#d4bb7a" },
+  { key: "theme.colorPrimary", label: "Primary Accent", default: "#00c4d4" },
+  { key: "theme.colorPrimaryHover", label: "Primary Accent Hover", default: "#00b0bf" },
   { key: "theme.colorLight", label: "Light / Sand Background", default: "#f5f0e6" },
   { key: "site.brandName", label: "Brand Name", default: "Atlas Global" },
   { key: "site.brandTagline", label: "Brand Tagline", default: "Resilience Corp." },
