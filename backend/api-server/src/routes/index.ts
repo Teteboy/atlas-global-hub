@@ -9,6 +9,7 @@ import contactRouter from "./contact";
 import statsRouter from "./stats";
 import siteContentRouter from "./site_content";
 import siteSettingsRouter from "./site_settings";
+import uploadsRouter from "./uploads";
 
 const router: IRouter = Router();
 
@@ -22,5 +23,6 @@ router.use(contactRouter);
 router.use(statsRouter);
 router.use(siteContentRouter);
 router.use(siteSettingsRouter);
+router.use(uploadsRouter);
 
 export default router;
