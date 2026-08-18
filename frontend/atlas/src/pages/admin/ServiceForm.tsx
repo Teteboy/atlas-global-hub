@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useParams } from "wouter";
+import { Link, useParams, useLocation } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export default function ServiceForm() {
   const { id } = useParams<{ id: string }>();
   const isEdit = !!id;
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState({
     slug: "",
@@ -83,7 +85,11 @@ export default function ServiceForm() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["services"] });
-      window.location.href = "/admin/services";
+      toast({ title: isEdit ? "Service updated" : "Service created" });
+      setLocation("/admin/services");
+    },
+    onError: () => {
+      toast({ title: "Failed to save service", description: "Please try again.", variant: "destructive" });
     },
   });
 

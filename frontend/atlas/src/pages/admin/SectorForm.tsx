@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useParams } from "wouter";
+import { Link, useParams, useLocation } from "wouter";
 import { ArrowLeft, Save } from "lucide-react";
+import ImageUploader from "@/components/admin/ImageUploader";
+import { toast } from "@/hooks/use-toast";
 
 export default function SectorForm() {
   const { id } = useParams<{ id: string }>();
   const isEdit = !!id;
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState({
     slug: "",
@@ -34,19 +37,20 @@ export default function SectorForm() {
           descriptionFr: sector.descriptionFr ?? "",
           descriptionEn: sector.descriptionEn ?? "",
           corridor: sector.corridor ?? "",
-          imageUrl: "",
+          imageUrl: sector.imageUrl ?? "",
         });
       })
       .catch(() => undefined);
   }, [id, isEdit]);
 
   const mutation = useMutation({
-    mutationFn: async ({ imageUrl: _imageUrl, ...data }: typeof formData) => {
+    mutationFn: async (data: typeof formData) => {
       const response = await fetch(isEdit ? `/api/sectors/${id}` : "/api/sectors", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
+          imageUrl: data.imageUrl || null,
           icon: "Globe2",
           countries: [],
           highlights: [],
@@ -57,7 +61,11 @@ export default function SectorForm() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sectors"] });
-      window.location.href = "/admin/sectors";
+      toast({ title: isEdit ? "Sector updated" : "Sector created" });
+      setLocation("/admin/sectors");
+    },
+    onError: () => {
+      toast({ title: "Failed to save sector", description: "Please try again.", variant: "destructive" });
     },
   });
 
@@ -143,17 +151,15 @@ export default function SectorForm() {
             />
           </div>
 
-          {/* Image URL */}
+          {/* Image */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-            <input
-              type="url"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00C4D4] focus:border-transparent outline-none"
-              placeholder="https://example.com/image.jpg"
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-2">Image</label>
+            <div className="max-w-xs">
+              <ImageUploader
+                value={formData.imageUrl}
+                onChange={(url) => setFormData((prev) => ({ ...prev, imageUrl: url }))}
+              />
+            </div>
           </div>
 
           {/* French Description */}

@@ -419,6 +419,8 @@ components:
           type: array
           items:
             type: string
+        imageUrl:
+          type: ["string", "null"]
 
     ContactInput:
       type: object

@@ -13,6 +13,7 @@ export const sectorsTable = pgTable("sectors", {
   corridor: text("corridor").notNull(),
   countries: text("countries").array().notNull().default([]),
   highlights: text("highlights").array().notNull().default([]),
+  imageUrl: text("image_url"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

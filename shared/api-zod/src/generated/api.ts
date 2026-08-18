@@ -224,7 +224,8 @@ export const ListSectorsResponseItem = zod.object({
   "icon": zod.string(),
   "corridor": zod.string(),
   "countries": zod.array(zod.string()),
-  "highlights": zod.array(zod.string())
+  "highlights": zod.array(zod.string()),
+  "imageUrl": zod.string().nullish()
 })
 export const ListSectorsResponse = zod.array(ListSectorsResponseItem)
 

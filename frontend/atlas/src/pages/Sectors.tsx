@@ -79,7 +79,7 @@ export default function Sectors() {
                     className={`group rounded-2xl overflow-hidden border border-border hover:border-[var(--color-atlas-primary)]/40 hover:shadow-2xl hover:shadow-black/8 transition-all duration-300`}>
                     {/* Image header */}
                     <div className="relative h-52 overflow-hidden">
-                      <img src={corridorImages[i % corridorImages.length]} alt={lang === "fr" ? sector.titleFr : sector.titleEn}
+                      <img src={sector.imageUrl || corridorImages[i % corridorImages.length]} alt={lang === "fr" ? sector.titleFr : sector.titleEn}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className={`absolute inset-0 bg-gradient-to-t from-[var(--color-atlas-dark)]/90 via-[var(--color-atlas-dark)]/40 to-transparent`} />
                       {/* Corridor badge */}

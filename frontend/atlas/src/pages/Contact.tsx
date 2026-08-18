@@ -31,11 +31,15 @@ export default function Contact() {
 
   const heroImage = getSetting("contact.hero.image", "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80");
   const sidebarImage = getSetting("contact.sidebar.image", "https://images.unsplash.com/photo-1573492420057-29b4a2657440?auto=format&fit=crop&w=600&q=80");
-  const contactInfo = getJson("contact.info.json", [
-    { icon: "Mail", labelFr: "Email", labelEn: "Email", value: "contact@atlas-grc.com" },
+  const contactEmail = getSetting("contact.email", "contact@atlas-grc.com");
+  const contactInfoRaw = getJson("contact.info.json", [
+    { icon: "Mail", labelFr: "Email", labelEn: "Email", value: contactEmail },
     { icon: "MapPin", labelFr: "Présence", labelEn: "Presence", valueFr: "Canada · Afrique · International", valueEn: "Canada · Africa · International" },
     { icon: "Clock", labelFr: "Délai de réponse", labelEn: "Response time", valueFr: "Sous 48 heures ouvrables", valueEn: "Within 48 business hours" },
   ]);
+  const contactInfo = contactInfoRaw.map((item) =>
+    item.icon === "Mail" ? { ...item, value: contactEmail, valueFr: contactEmail, valueEn: contactEmail } : item
+  );
 
   const iconMap: Record<string, React.ElementType> = { Mail, MapPin, Clock };
 

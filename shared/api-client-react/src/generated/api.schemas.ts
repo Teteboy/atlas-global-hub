@@ -96,6 +96,8 @@ export interface Sector {
   corridor: string;
   countries: string[];
   highlights: string[];
+  /** @nullable */
+  imageUrl?: string | null;
 }
 
 export type ContactInputLang = typeof ContactInputLang[keyof typeof ContactInputLang];

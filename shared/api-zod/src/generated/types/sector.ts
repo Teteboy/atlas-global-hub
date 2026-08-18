@@ -17,4 +17,6 @@ export interface Sector {
   corridor: string;
   countries: string[];
   highlights: string[];
+  /** @nullable */
+  imageUrl?: string | null;
 }

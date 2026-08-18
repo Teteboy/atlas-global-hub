@@ -43,7 +43,7 @@ router.post("/uploads", requireAuth, upload.single("file"), (req: Request, res: 
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
-  return res.status(201).json({ url: `/uploads/${req.file.filename}` });
+  return res.status(201).json({ url: `/api/uploads/${req.file.filename}` });
 });
 
 router.use((err: any, _req: Request, res: Response, _next: any) => {

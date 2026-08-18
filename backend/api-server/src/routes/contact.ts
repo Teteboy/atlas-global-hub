@@ -3,6 +3,7 @@ import { db, contactSubmissionsTable } from "@workspace/db";
 import { desc } from "drizzle-orm";
 import { SubmitContactBody } from "@workspace/api-zod";
 import { requireAuth } from "../middleware/auth";
+import { sendContactNotification } from "../lib/mailer";
 
 const router = Router();
 
@@ -27,6 +28,10 @@ router.post("/contact", async (req, res) => {
         lang: data.lang ?? null,
       })
       .returning();
+
+    sendContactNotification(data).catch((err) => {
+      req.log.error({ err }, "Failed to send contact notification email");
+    });
 
     return res.status(201).json(submission);
   } catch (err) {
