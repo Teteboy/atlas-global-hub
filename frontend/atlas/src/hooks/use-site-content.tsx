@@ -1,40 +1,14 @@
-import { createContext, useContext, ReactNode, useMemo } from "react";
+import { useContext, ReactNode, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLanguage } from "./use-language";
+import {
+  SiteContentContext,
+  type SiteContentContextValue,
+  type SiteContentResponse,
+  type SiteSettingsResponse,
+} from "./site-content-context";
 
-export interface SiteContentItem {
-  id: number;
-  key: string;
-  valueFr: string | null;
-  valueEn: string | null;
-  value: string | null;
-  type: string;
-  category: string;
-}
-
-interface SiteContentResponse {
-  rows: SiteContentItem[];
-  byKey: Record<string, SiteContentItem>;
-}
-
-interface SiteSettingsResponse {
-  rows: { key: string; value: string }[];
-  byKey: Record<string, string>;
-}
-
-interface SiteContentContextValue {
-  content: Record<string, SiteContentItem>;
-  settings: Record<string, string>;
-  isLoading: boolean;
-  error: unknown;
-  getText: (key: string, fallbackFr?: string, fallbackEn?: string) => string;
-  getValue: (key: string, fallback?: string) => string;
-  getJson: <T = unknown>(key: string, fallback?: T) => T;
-  getSetting: (key: string, fallback?: string) => string;
-  refetch: () => Promise<void>;
-}
-
-const SiteContentContext = createContext<SiteContentContextValue | undefined>(undefined);
+export * from "./site-content-context";
 
 async function fetchSiteContent(): Promise<SiteContentResponse> {
   const res = await fetch("/api/site-content", { credentials: "include" });

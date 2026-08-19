@@ -27,6 +27,10 @@ const getJsonRe = new RegExp(
   `getJson\\s*\\(\\s*(${STR_RE})\\s*,\\s*([\\s\\S]+?)\\s*\\)`,
   "gs"
 );
+const tRe = new RegExp(
+  `t\\s*\\(\\s*(${STR_RE})\\s*,\\s*(${STR_RE})\\s*\\)`,
+  "gs"
+);
 
 const CATEGORIES = [
   "home",
@@ -136,6 +140,12 @@ for (const file of walk(FRONTEND_SRC)) {
     } else if (fr) {
       addContent(key, { value: fr });
     }
+  }
+
+  for (const m of src.matchAll(tRe)) {
+    const fr = unquote(m[1]);
+    const en = unquote(m[2]);
+    addContent(fr, { valueFr: fr, valueEn: en, category: "general" });
   }
 
   for (const m of src.matchAll(getSettingRe)) {

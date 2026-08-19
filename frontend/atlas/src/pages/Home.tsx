@@ -42,6 +42,11 @@ export default function Home() {
         "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
       ];
 
+  const title1 = getText("home.hero.title.1", "Concevoir,", "Design,");
+  const title2 = getText("home.hero.title.2", "structurer &", "structure &");
+  const title3Prefix = getText("home.hero.title.3.prefix", "faire", "");
+  const title3Accent = getText("home.hero.title.3.accent", "avancer", "advance");
+
   const statsStrip = getText("home.stats.json", JSON.stringify([
     { value: "5+", labelFr: "Domaines d'expertise", labelEn: "Areas of expertise" },
     { value: "4", labelFr: "Corridors actifs", labelEn: "Active corridors" },
@@ -92,11 +97,10 @@ export default function Home() {
 
             <motion.h1 custom={1} initial="hidden" animate="visible" variants={fadeUp}
               className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] tracking-tight mb-8">
-              {lang === "fr" ? (
-                <>Concevoir,<br />structurer &amp;<br />faire <em className={`not-italic text-[var(--color-atlas-primary)]`}>avancer</em>.</>
-              ) : (
-                <>Design,<br />structure &amp;<br /><em className={`not-italic text-[var(--color-atlas-primary)]`}>advance</em>.</>
-              )}
+              {title1}<br />
+              {title2}<br />
+              {title3Prefix ? <>{title3Prefix} </> : null}
+              <em className={`not-italic text-[var(--color-atlas-primary)]`}>{title3Accent}</em>.
             </motion.h1>
 
             <motion.p custom={2} initial="hidden" animate="visible" variants={fadeUp}
