@@ -1,0 +1,302 @@
+Atlas Global Resilience Corp.
+
+Proposition actualisée de contenu pour le site internet
+
+Document de cadrage éditorial, marketing et visuel à remettre au monteur web
+
+
+
+Principe directeur : le site doit être un outil de conversion, de crédibilité et de développement commercial. Il doit donner une impression immédiate de clarté, d’exécution, d’envergure internationale et de valeur client.
+
+1. Orientation générale du site
+
+Le site doit présenter Atlas comme une plateforme de conseil et d’assistance à la mise en œuvre, capable d’intervenir à l’intersection du développement économique, de la transformation numérique, des compétences, du climat, de l’éducation résiliente, des partenariats transatlantiques et du pilotage de projets.
+
+Le ton doit être marketing, crédible, international et orienté action. Le discours doit être plus direct et plus lisible que le business plan, centré sur la valeur client, les cas d’usage, les résultats attendus et les prises de contact qualifiées.
+
+Le site doit répondre à trois fonctions simultanées :
+
+expliquer clairement ce que fait Atlas et pour quels types de clients ;
+
+rassurer par des preuves de capacité et des exemples de réalisations ;
+
+faire progresser le visiteur vers un contact qualifié, un appel découverte ou une demande de cadrage.
+
+2. Diagramme d’architecture du site
+
+L’architecture du site doit être simple, claire et pensée pour la conversion. La navigation principale ne doit pas dépasser cinq à six rubriques.
+
+
+
+Figure 1. Architecture recommandée du site, avec hiérarchie des rubriques, rubriques de preuve et point de conversion principal.
+
+3. Rubrique Accueil (page d’entrée)
+
+Objectif : donner, en moins de 10 secondes, une compréhension claire de ce qu’est Atlas, de ce que l’entreprise fait, et de pourquoi un client devrait la contacter maintenant.
+
+
+
+Figure 2. Maquette conceptuelle de la page d’accueil – ordre recommandé des blocs et priorités éditoriales.
+
+3.1 Hero principal
+
+Titre principal recommandé : Concevoir, structurer et faire avancer des initiatives à fort impact entre le Canada, l’Afrique et leurs partenaires.
+
+Alternative plus directe : Du diagnostic au déploiement : Atlas transforme les idées stratégiques en mandats, pilotes et résultats mesurables.
+
+Sous-texte recommandé : Conseil stratégique, assistance à la mise en œuvre, transformation institutionnelle, compétitivité, climat, éducation résiliente et partenariats complexes.
+
+CTA principal : Parler à Atlas.
+
+CTA secondaire : Demander un appel découverte.
+
+3.2 Bandeau de crédibilité
+
+Insérer juste après le hero un bandeau de crédibilité avec des libellés du type : Canada–Afrique • Stratégie + exécution • Approche bilingue • Mandats institutionnels • Partenariats complexes • Focus résultats.
+
+3.3 Bloc “Nos cinq paniers de services”
+
+Présenter les services comme des paniers cohérents et complémentaires, et non comme une liste dispersée de prestations.
+
+
+
+Figure 3. Organisation marketing recommandée des offres, à présenter comme cinq paniers cohérents.
+
+3.4 Bloc “Pourquoi Atlas”
+
+Connaissance contextuelle forte : compréhension directe des contextes africains, des environnements institutionnels et des réalités de mise en œuvre.
+
+Approche orientée exécution : Atlas aide à cadrer, tester, structurer, piloter et faire avancer des projets.
+
+Positionnement corridor : capacité à relier Canada, Afrique et partenaires internationaux autour d’initiatives concrètes.
+
+Souplesse de déploiement : modèle agile, réseau d’associés, capacité à intervenir en lead sur des petits mandats ou comme partenaire spécialisé dans un consortium.
+
+3.5 Bloc “Secteurs et marchés”
+
+Présenter des cartes ou tuiles simples pour : transformation numérique, compétitivité productive, éducation et compétences, climat et finance verte, corridors commerciaux et partenariats.
+
+3.6 Bloc “Réalisations mises en avant”
+
+Le site doit mettre en avant dès la page d’accueil deux références de capacité transformées en cartes projet. Elles servent de preuve, de démonstration de style d’intervention et de tremplin vers la page “Réalisations”.
+
+Exemple 1 : REFUS-Carbone — Résilience Economique de la Femme en Univers Sobre en Carbone ; employabilité des femmes, inclusion, numérique, croissance verte, intervention au Cameroun, en RCA et au Tchad ;
+
+Exemple 2 : Gouvernance inclusive et formation hybride — innovation pédagogique, résilience éducative, environnement numérique, contexte de crise.
+
+4. Rubrique À propos
+
+Objectif : installer la crédibilité, humaniser la marque, clarifier la mission et expliquer la différenciation.
+
+Notre mission
+
+Notre approche : écouter, cadrer, structurer, piloter, transférer
+
+Notre manière de travailler : rigueur, clarté, partenariats, résultats
+
+Le leadership : biographie courte du fondateur, axée sur l’expérience, les marchés, les consortiums, et la capacité à faire le lien entre stratégie et mise en œuvre
+
+Pourquoi le nom Atlas : image de connexion, de portée, de structure et de fiabilité
+
+5. Rubrique Services
+
+Objectif : convertir l’intérêt en mandat en présentant des offres compréhensibles, modulaires et orientées résultat. La page Services doit comporter une vue d’ensemble des cinq paniers, puis des pages détaillées ou sections déployables.
+
+Digital Economy, Productivity & Competitiveness
+
+Education, Skills & Institutional Transformation
+
+Climate Action, Green Finance & Resilience
+
+Partnerships, Globalization & Strategic Positioning
+
+Governance, PMO & Political-Economy Navigation
+
+Chaque page service devrait suivre le même schéma : problème client, proposition de valeur, exemples de mandats, livrables typiques, formats d’intervention, CTA.
+
+Panier
+
+Promesse marketing
+
+Exemples de contenus / livrables à afficher
+
+Digital Economy, Productivity & Competitiveness
+
+Accélérer la transformation numérique et la performance productive.
+
+Diagnostics, feuilles de route, pilotes, PMO, modernisation de services, compétitivité des PME, préparation AfCFTA.
+
+Education, Skills & Institutional Transformation
+
+Transformer des plateformes d’apprentissage en moteurs de valeur et d’employabilité.
+
+Transformation de centres, monétisation d’offres, compétences, employabilité, climate-smart education, continuité pédagogique.
+
+Climate Action, Green Finance & Resilience
+
+Préparer des initiatives plus résilientes, plus finançables et plus crédibles.
+
+Pipelines d’adaptation, concepts de green facility, bankable projects, résilience communautaire, systèmes éducatifs résilients.
+
+Partnerships, Globalization & Strategic Positioning
+
+Créer des corridors de coopération, de marché et de mise en œuvre.
+
+Canada–Afrique, Canada–Europe–Afrique, notes stratégiques, partenariats, convening, local value creation.
+
+Governance, PMO & Political-Economy Navigation
+
+Sécuriser l’exécution dans des environnements complexes.
+
+PMO, cartographie des parties prenantes, séquençage des réformes, reporting, coordination, delivery support.
+
+6. Rubrique Secteurs & corridors
+
+Objectif : aider le visiteur à se reconnaître dans un marché, un secteur ou une géographie et montrer où Atlas est le plus pertinent.
+
+Corridor Canada–Cameroun : transformation numérique, plateformes universitaires, compétences, pilotes démonstratifs.
+
+Corridor Canada–Nigeria : productivité, compétitivité, transformation industrielle, systèmes de compétences.
+
+Afrique régionale : climat, finance verte, résilience, systèmes éducatifs et partenariats sectoriels.
+
+Transatlantique : stratégie, positionnement, consortiums, coopération institutionnelle.
+
+7. Rubrique Réalisations / preuves de capacité
+
+Objectif : rassurer, rendre l’offre tangible et montrer le style d’intervention d’Atlas. Cette rubrique doit devenir un espace de preuve, avec des cartes projet visuelles, des résumés à fort impact et, lorsque possible, des chiffres ou éléments de portée.
+
+
+
+Figure 4. Exemples de réalisations à convertir en cartes projet, sous réserve de validation finale de formulation et d’attribution.
+
+7.1 Exemple de carte projet n°1 – REFUS-Carbone
+
+Titre recommandé pour le site : Renforcer l’employabilité des femmes et la croissance verte par les compétences, le numérique et l’inclusion.
+
+Accroche courte : Projet pilote régional axé sur les compétences, l’employabilité des femmes et la croissance sobre en carbone en Afrique centrale.
+
+Zone d’intervention à afficher : Cameroun, République centrafricaine et Tchad.
+
+Données à afficher : 14 mois ; budget de 149 110,3838 euros ; financement AUF / PRICNAC.
+
+Mention institutionnelle recommandée : AUF = Agence Universitaire de la Francophonie ; PRICNAC = Promotion de la Recherche, de l’Innovation et de la Culture Numérique en Afrique Centrale, programme financé par l’Union européenne visant à stimuler les écosystèmes d’innovation, l’entrepreneuriat et le numérique pour le développement durable.
+
+Formulation longue possible sur la page Réalisations : REFUS-Carbone = Résilience Economique de la Femme en Univers Sobre en Carbone.
+
+Narratif web recommandé : un projet qui relie développement des compétences, inclusion, numérique, employabilité féminine et besoins du marché du travail dans des filières sobres en carbone.
+
+CTA sous la carte : Explorer un mandat similaire.
+
+7.2 Exemple de carte projet n°2 – Gouvernance inclusive et formation hybride
+
+Titre recommandé pour le site : Concevoir des dispositifs de formation hybrides, inclusifs et résilients en contexte de crise.
+
+Accroche courte : Initiative de renforcement de la gouvernance pédagogique, de la formation des enseignants et de l’innovation éducative dans un environnement numérique et plurilingue.
+
+Portée géographique : Cameroun, RCA et Tchad.
+
+Données à afficher : coût de l’action 1 425 700 EUR ; contribution du CRDI 1 200 000 $CAD ; période du 01/04/2021 au 31/12/2023.
+
+Mention institutionnelle recommandée : CRDI = Centre de Recherches pour le développement international.
+
+Narratif web recommandé : une référence forte pour illustrer la capacité à articuler gouvernance, contenus, numérique, hybridation pédagogique, résilience et qualité de l’apprentissage.
+
+CTA sous la carte : Discuter d’un projet de transformation éducative.
+
+7.3 Structure type d’une carte projet pour le site
+
+Élément de la carte
+
+Contenu recommandé
+
+Titre
+
+Nom du projet ou reformulation marketing courte
+
+Défi
+
+Le problème concret traité
+
+Approche
+
+Ce qui a été conçu, structuré, mis en œuvre ou piloté
+
+Portée
+
+Pays, institutions, publics cibles
+
+Indicateurs
+
+Durée, budget, financement, nombre de bénéficiaires si disponible
+
+Résultat
+
+Impact, bénéfice ou démonstration de capacité
+
+CTA
+
+Parler à Atlas d’un mandat similaire
+
+8. Rubrique Insights / Ressources
+
+Objectif : démontrer la profondeur de réflexion d’Atlas, améliorer le référencement et générer des prises de contact qualifiées.
+
+Formats recommandés : articles, notes stratégiques courtes, points de vue, briefs sectoriels, téléchargements PDF.
+
+Rythme recommandé : 1 à 2 contenus par mois au lancement.
+
+Thèmes initiaux : corridors Canada–Afrique, compétitivité des PME, climate-smart education, finance verte, transformation de plateformes institutionnelles, delivery & PMO.
+
+9. Rubrique Contact et conversion
+
+Objectif : rendre la prise de contact très simple et très claire. Le visiteur doit savoir quoi faire, à quoi s’attendre et sous quel délai Atlas répond.
+
+
+
+Figure 5. Parcours de conversion recommandé, du premier contact jusqu’au mandat et à l’extension de la relation.
+
+Titre de section : Discutons de votre initiative.
+
+Formulaire court : nom, organisation, email, pays, sujet, type de besoin, message.
+
+Alternative visible : email direct + bouton pour réserver un appel découverte.
+
+Texte de réassurance : réponse sous 48 heures ouvrables.
+
+10. Recommandations visuelles et fonctionnelles pour le monteur web
+
+Privilégier une esthétique premium, claire et sobre, avec une dominante bleu profond / bleu gris, complétée par des accents vert, or et violet pour différencier les paniers de services.
+
+Utiliser des sections aérées, des cartes avec ombres légères, des icônes simples et des appels à l’action visibles.
+
+Prévoir une version bilingue FR/EN dès la conception du site.
+
+Créer une page “Réalisations” facilement extensible, alimentée par des cartes projet réutilisables.
+
+Prévoir un back-office simple pour publier des insights, notes et briefs PDF.
+
+Optimiser le site pour mobile dès le départ.
+
+Prévoir des formulaires reliés à une boîte email claire et à un CRM simple ou à minima à un système de notification.
+
+11. Consignes de formulation pour les réalisations
+
+Les deux références intégrées dans ce document doivent être utilisées comme exemples de réalisations à valoriser, sous réserve de validation finale du promoteur sur les points suivants :
+
+niveau d’attribution à l’entreprise, au fondateur ou à une expérience antérieure ;
+
+présence ou non de logos de bailleurs et institutions ;
+
+mention exacte des budgets, financements et dates ;
+
+utilisation éventuelle de chiffres de résultats ou d’impacts complémentaires ;
+
+droits d’usage sur les visuels ou supports liés au projet.
+
+12. Synthèse opérationnelle pour le monteur web
+
+Le monteur web doit comprendre que le site d’Atlas n’est pas un site vitrine passif. C’est un outil de positionnement, de preuve et de conversion. Il doit donc être construit autour d’une promesse claire, de cinq paniers de services lisibles, de preuves de capacité tangibles, de quelques insights bien choisis et d’une mécanique de contact simple.
+
+La priorité n’est pas de tout dire, mais de dire les bonnes choses, dans le bon ordre, avec un niveau de lisibilité, de crédibilité et de désirabilité compatible avec des clients institutionnels, des consortiums, des bailleurs, des entreprises et des partenaires internationaux.
+
