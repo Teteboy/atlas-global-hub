@@ -1,26 +1,42 @@
+import { useLanguage } from "@/hooks/use-language";
 import { useSiteContent } from "@/hooks/use-site-content";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: i * 0.1 },
-  }),
-};
+interface BlogPost {
+  id: number;
+  titleFr: string;
+  titleEn: string;
+  summaryFr: string;
+  summaryEn: string;
+  category: string;
+  imageUrl: string | null;
+  publishedAt: string;
+  featured: boolean;
+}
+
+async function fetchBlogPosts(): Promise<BlogPost[]> {
+  const res = await fetch("/api/blog-posts", { credentials: "include" });
+  if (!res.ok) throw new Error("Failed to load blog posts");
+  return res.json();
+}
 
 export default function Blog() {
+  const { lang, t } = useLanguage();
   const { getText, getSetting } = useSiteContent();
+  const { data: posts, isLoading } = useQuery<BlogPost[]>({
+    queryKey: ["blog-posts"],
+    queryFn: fetchBlogPosts,
+  });
 
   const heroImage = getSetting("blog.hero.image", "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1920&q=80");
-  const postImage = getSetting("blog.post.image", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80");
+  const primary = "var(--color-atlas-primary)";
 
   return (
     <div className="w-full">
-
-
       <section className="relative min-h-[60vh] flex items-end bg-[var(--color-atlas-dark)] pb-16 pt-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
@@ -32,17 +48,17 @@ export default function Blog() {
         </div>
         <div className="absolute inset-0 z-0 hero-grid opacity-40" />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="mb-4 flex items-center gap-3">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4 flex items-center gap-3">
             <span className="w-6 h-px bg-[var(--color-atlas-primary)]" />
             <span className="text-[var(--color-atlas-primary)] text-xs font-semibold tracking-[0.2em] uppercase">
               {getText("blog.hero.overline", "Actualités", "News")}
             </span>
           </motion.div>
-          <motion.h1 initial="hidden" animate="visible" variants={fadeUp} custom={1}
+          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-5xl md:text-7xl text-white leading-tight max-w-3xl">
             {getText("blog.hero.title", "Blog Atlas", "Atlas Blog")}
           </motion.h1>
-          <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2}
+          <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-8 text-white/55 text-lg max-w-2xl leading-relaxed">
             {getText("blog.hero.subtitle",
               "Réflexions, actualités et analyses sur les corridors Canada-Afrique et les grands enjeux internationaux.",
@@ -52,69 +68,101 @@ export default function Blog() {
         </div>
       </section>
 
-
-      <section className="py-24 md:py-32 bg-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-            <div className="relative order-2 lg:order-1">
-              <div className="rounded-2xl overflow-hidden h-80 lg:h-[500px]">
-                <img
-                  src={postImage}
-                  alt={getText("blog.post.imageAlt", "Article en vedette", "Featured article")}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => <Skeleton key={i} className="h-96 rounded-2xl" />)}
             </div>
-            <div className="order-1 lg:order-2">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-[var(--color-atlas-primary)] text-xs font-semibold tracking-[0.2em] uppercase">
-                  {getText("blog.post.overline", "Article en vedette", "Featured article")}
-                </span>
-                <span className="flex-1 h-px bg-border max-w-12" />
-              </div>
-              <h2 className="font-display text-4xl md:text-5xl text-[var(--color-atlas-dark)] mb-8 leading-tight">
-                {getText("blog.post.title", "Le pouvoir des corridors durables", "The power of sustainable corridors")}
-              </h2>
-              <div className="space-y-5 text-muted-foreground leading-relaxed mb-8">
-                <p>{getText("blog.post.p1",
-                  "Les corridors économiques entre le Canada et l'Afrique ne sont pas de simples routes commerciales : ce sont des vecteurs de résilience, d'innovation et de coopération.",
-                  "Economic corridors between Canada and Africa are more than trade routes: they are vectors of resilience, innovation and cooperation."
-                )}</p>
-                <p>{getText("blog.post.p2",
-                  "Chez Atlas Global Resilience Corp., nous croyons que leur succès repose sur une compréhension fine des contextes locaux, un pilotage rigoureux et des partenariats inclusifs.",
-                  "At Atlas Global Resilience Corp., we believe their success relies on a deep understanding of local contexts, rigorous steering and inclusive partnerships."
-                )}</p>
-              </div>
-              <Link href="/insights"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-atlas-primary)] hover:gap-3 transition-all">
-                {getText("blog.post.link", "Lire l'article", "Read article")}
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+          ) : !Array.isArray(posts) || posts.length === 0 ? (
+            <p className="text-muted-foreground text-center py-20">{t("Aucun article disponible.", "No posts available.")}</p>
+          ) : (
+            <div>
+              {Array.isArray(posts) && posts.length > 0 && (
+                <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-10">
+                  <Link href={`/blog/${posts[0].id}`} className="group block">
+                    <div className="border border-border hover:border-[var(--color-atlas-primary)]/40 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-black/8 transition-all duration-300">
+                      <div className="grid grid-cols-1 lg:grid-cols-2">
+                        <div className="relative h-64 lg:h-80 overflow-hidden">
+                          <img
+                            src={posts[0].imageUrl ?? "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"}
+                            alt={lang === "fr" ? (posts[0].titleFr ?? "") : (posts[0].titleEn ?? "")}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--color-atlas-dark)]/20" />
+                        </div>
+                        <div className="p-8 md:p-10 flex flex-col justify-center">
+                          {posts[0].category && (
+                            <span className="inline-block px-3 py-1 text-xs font-semibold bg-[var(--color-atlas-primary)]/10 text-[var(--color-atlas-primary)] rounded-full mb-5 w-fit">
+                              {posts[0].category}
+                            </span>
+                          )}
+                          <h2 className="font-display text-3xl md:text-4xl text-[var(--color-atlas-dark)] mb-4 leading-snug group-hover:text-[var(--color-atlas-primary)] transition-colors">
+                            {lang === "fr" ? posts[0].titleFr : posts[0].titleEn}
+                          </h2>
+                          <p className="text-muted-foreground leading-relaxed mb-6">
+                            {lang === "fr" ? posts[0].summaryFr : posts[0].summaryEn}
+                          </p>
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground mb-6">
+                            {posts[0].publishedAt && (
+                              <span>{new Date(posts[0].publishedAt).toLocaleDateString(lang === "fr" ? "fr-CA" : "en-CA", { year: "numeric", month: "long", day: "numeric" })}</span>
+                            )}
+                          </div>
+                          <div className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-atlas-primary)]">
+                            {t("Lire l'article", "Read article")}
+                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              )}
+
+              {posts && posts.length > 1 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {posts.slice(1).map((post, i) => (
+                    <motion.div key={post.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
+                      <Link href={`/blog/${post.id}`} className="group block h-full">
+                        <div className="h-full border border-border hover:border-[var(--color-atlas-primary)]/40 rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-300 flex flex-col">
+                          <div className="relative h-48 overflow-hidden">
+                            <img
+                              src={post.imageUrl ?? "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80"}
+                              alt={lang === "fr" ? (post.titleFr ?? "") : (post.titleEn ?? "")}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-[var(--color-atlas-dark)]/30" />
+                            {post.category && (
+                              <span className="absolute bottom-3 left-4 px-3 py-1 text-xs font-semibold bg-[var(--color-atlas-primary)] text-white rounded-full">
+                                {post.category}
+                              </span>
+                            )}
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <h3 className="font-bold text-[var(--color-atlas-dark)] mb-3 group-hover:text-[var(--color-atlas-primary)] transition-colors leading-snug flex-1">
+                              {lang === "fr" ? post.titleFr : post.titleEn}
+                            </h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed mb-5 line-clamp-2">
+                              {lang === "fr" ? post.summaryFr : post.summaryEn}
+                            </p>
+                            <div className="flex items-center justify-between text-xs text-muted-foreground">
+                              <span className="flex items-center gap-1 font-semibold text-[var(--color-atlas-primary)]">
+                                {t("Lire", "Read")} <ArrowUpRight className="w-3.5 h-3.5" />
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
       </section>
-
-
-      <section className="py-24 md:py-32 bg-[var(--color-atlas-light)]">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-display text-4xl md:text-5xl text-[var(--color-atlas-dark)] mb-6">
-            {getText("blog.cta.title", "Découvrez toutes nos perspectives", "Discover all our insights")}
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            {getText("blog.cta.subtitle",
-              "Explorez nos analyses approfondies sur les marchés, les politiques publiques et les opportunités de partenariat.",
-              "Explore our in-depth analyses on markets, public policy and partnership opportunities."
-            )}
-          </p>
-          <Link href="/insights"
-            className="inline-flex items-center gap-2 bg-[var(--color-atlas-primary)] hover:bg-[var(--color-atlas-primary-hover)] text-white font-semibold px-8 py-4 rounded-full text-sm transition-all duration-200 shadow-lg shadow-[var(--color-atlas-primary)]/25 hover:-translate-y-0.5">
-            {getText("blog.cta.button", "Toutes les analyses", "All analyses")}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
-
     </div>
   );
 }

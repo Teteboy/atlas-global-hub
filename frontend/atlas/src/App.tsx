@@ -15,6 +15,7 @@ import Sectors from "@/pages/Sectors";
 import Projects from "@/pages/Projects";
 import Insights from "@/pages/Insights";
 import Blog from "@/pages/Blog";
+import BlogPostDetail from "@/pages/BlogPostDetail";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
 import AdminDashboard from "@/pages/admin/Dashboard";
@@ -22,6 +23,8 @@ import AdminServices from "@/pages/admin/Services";
 import AdminProjects from "@/pages/admin/Projects";
 import AdminInsights from "@/pages/admin/Insights";
 import AdminSectors from "@/pages/admin/Sectors";
+import AdminBlogPosts from "@/pages/admin/BlogPosts";
+import BlogPostForm from "@/pages/admin/BlogPostForm";
 import AdminLogin from "@/pages/admin/Login";
 import AdminContent from "@/pages/admin/Content";
 import AdminSettings from "@/pages/admin/Settings";
@@ -100,6 +103,21 @@ function Router() {
           <InsightForm />
         </AdminLayout>
       </Route>
+      <Route path="/admin/blog-posts">
+        <AdminLayout>
+          <AdminBlogPosts />
+        </AdminLayout>
+      </Route>
+      <Route path="/admin/blog-posts/new">
+        <AdminLayout>
+          <BlogPostForm />
+        </AdminLayout>
+      </Route>
+      <Route path="/admin/blog-posts/:id/edit">
+        <AdminLayout>
+          <BlogPostForm />
+        </AdminLayout>
+      </Route>
       <Route path="/admin/sectors">
         <AdminLayout>
           <AdminSectors />
@@ -139,6 +157,7 @@ function Router() {
           <Route path="/insights" component={Insights} />
           <Route path="/insights/:id" component={InsightDetail} />
           <Route path="/blog" component={Blog} />
+          <Route path="/blog/:id" component={BlogPostDetail} />
           <Route path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>

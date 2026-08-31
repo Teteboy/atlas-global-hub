@@ -2,6 +2,7 @@ import { db } from "./src/index";
 import { servicesTable } from "./src/schema/services";
 import { projectsTable } from "./src/schema/projects";
 import { insightsTable } from "./src/schema/insights";
+import { blogPostsTable } from "./src/schema/blog_posts";
 import { sectorsTable } from "./src/schema/sectors";
 
 async function seed() {
@@ -11,6 +12,7 @@ async function seed() {
   console.log("Clearing existing data...");
   await db.delete(sectorsTable);
   await db.delete(insightsTable);
+  await db.delete(blogPostsTable);
   await db.delete(projectsTable);
   await db.delete(servicesTable);
 
@@ -203,6 +205,30 @@ async function seed() {
       bodyEn: "Project management offices (PMOs) play a crucial role in the success of public initiatives. We share our best practices and lessons learned.",
       category: "Gouvernance",
       featured: true,
+    },
+  ]);
+
+  // Seed blog posts
+  await db.insert(blogPostsTable).values([
+    {
+      titleFr: "Lancer des corridors durables",
+      titleEn: "Launching sustainable corridors",
+      summaryFr: "Comment structurer des partenariats Canada-Afrique à fort impact.",
+      summaryEn: "How to structure high-impact Canada-Africa partnerships.",
+      bodyFr: "Les corridors durables reposent sur une compréhension partagée des enjeux, des gouvernances claires et des mécanismes de financement adaptés. Cet article propose une feuille de route pour les acteurs qui veulent transformer une intention politique en résultats concrets.",
+      bodyEn: "Sustainable corridors rest on a shared understanding of the issues, clear governance and tailored financing mechanisms. This article offers a roadmap for actors who want to turn political intention into concrete results.",
+      category: "Stratégie",
+      featured: true,
+    },
+    {
+      titleFr: "L'importance du PMO dans la livraison",
+      titleEn: "The importance of PMO in delivery",
+      summaryFr: "Pourquoi un bureau de gestion de projet est essentiel aux initiatives complexes.",
+      summaryEn: "Why a project management office is essential for complex initiatives.",
+      bodyFr: "Dans des environnements multinationaux et multi-partenaires, le PMO apporte visibilité, discipline et coordination. Il n'est pas un simple outil administratif, mais un levier stratégique de résilience et d'apprentissage.",
+      bodyEn: "In multinational and multi-partner environments, the PMO brings visibility, discipline and coordination. It is not merely an administrative tool, but a strategic lever for resilience and learning.",
+      category: "Gouvernance",
+      featured: false,
     },
   ]);
 
