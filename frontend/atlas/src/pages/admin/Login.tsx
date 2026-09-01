@@ -107,13 +107,6 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          {/* Demo credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-600 text-center">
-              <span className="font-semibold">Demo credentials:</span> admin@atlas.com / admin123
-            </p>
-          </div>
-
           {/* Back to site */}
           <div className="mt-6 text-center">
             <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
