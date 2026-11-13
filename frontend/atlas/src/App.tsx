@@ -33,6 +33,7 @@ import ProjectForm from "@/pages/admin/ProjectForm";
 import InsightForm from "@/pages/admin/InsightForm";
 import SectorForm from "@/pages/admin/SectorForm";
 import ProjectDetail from "@/pages/ProjectDetail";
+import SectorDetail from "@/pages/SectorDetail";
 import InsightDetail from "@/pages/InsightDetail";
 import ServiceDetail from "@/pages/ServiceDetail";
 
@@ -152,6 +153,7 @@ function Router() {
           <Route path="/services" component={Services} />
           <Route path="/services/:id" component={ServiceDetail} />
           <Route path="/sectors" component={Sectors} />
+          <Route path="/sectors/:id" component={SectorDetail} />
           <Route path="/projects" component={Projects} />
           <Route path="/projects/:id" component={ProjectDetail} />
           <Route path="/insights" component={Insights} />
