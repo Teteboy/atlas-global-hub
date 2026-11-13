@@ -7,7 +7,7 @@ import { useSiteContent } from "@/hooks/use-site-content";
 
 const DEFAULT_CORRIDOR_IMAGES = [
   "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1570173655490-d4c94ba4b0c5?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
 ];

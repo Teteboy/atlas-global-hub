@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const DEFAULT_CORRIDOR_IMAGES = [
   "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1570173655490-d4c94ba4b0c5?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
 ];
@@ -22,8 +22,8 @@ export default function Sectors() {
   const dark = "var(--color-atlas-dark)";
   const light = "var(--color-atlas-light)";
 
-  const heroImage = getSetting("sectors.hero.image", "https://images.unsplash.com/photo-1502920917128-1aa500764bed?auto=format&fit=crop&w=1920&q=80");
-  const thematicImage = getSetting("sectors.thematic.image", "https://images.unsplash.com/photo-1573492420057-29b4a2657440?auto=format&fit=crop&w=1920&q=80");
+  const heroImage = getSetting("sectors.hero.image", "https://images.unsplash.com/photo-1488229297570-58520851e868?auto=format&fit=crop&w=1920&q=80");
+  const thematicImage = getSetting("sectors.thematic.image", "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1920&q=80");
   const corridorImages = getJson<string[]>("sectors.corridor.images.json", DEFAULT_CORRIDOR_IMAGES);
 
   return (

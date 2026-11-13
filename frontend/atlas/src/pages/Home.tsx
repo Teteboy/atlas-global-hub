@@ -32,7 +32,7 @@ export default function Home() {
     ? getSetting("home.project.images", "").split(",").filter(Boolean)
     : [
         "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1577041677443-8bbef8a04d1f?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
       ];
   const insightImages = getSetting("home.insight.images", "").split(",").filter(Boolean).length
     ? getSetting("home.insight.images", "").split(",").filter(Boolean)
@@ -291,7 +291,7 @@ export default function Home() {
                     <div className={`h-full border border-border rounded-2xl overflow-hidden hover:border-[var(--color-atlas-primary)]/40 hover:shadow-2xl hover:shadow-black/8 transition-all duration-300 flex flex-col`}>
                       <div className="relative h-52 overflow-hidden">
                         <img
-                          src={projectImages[i % projectImages.length]}
+                          src={project.imageUrl || projectImages[i % projectImages.length]}
                           alt={lang === "fr" ? project.titleFr : project.titleEn}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />

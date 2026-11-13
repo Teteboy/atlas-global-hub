@@ -30,7 +30,7 @@ export default function Contact() {
   const dark = "var(--color-atlas-dark)";
 
   const heroImage = getSetting("contact.hero.image", "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80");
-  const sidebarImage = getSetting("contact.sidebar.image", "https://images.unsplash.com/photo-1573492420057-29b4a2657440?auto=format&fit=crop&w=600&q=80");
+  const sidebarImage = getSetting("contact.sidebar.image", "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80");
   const contactEmail = getSetting("contact.email", "contact@atlas-grc.com");
   const contactInfoRaw = getJson("contact.info.json", [
     { icon: "Mail", labelFr: "Email", labelEn: "Email", value: contactEmail },
