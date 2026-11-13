@@ -72,7 +72,7 @@ export default function Projects() {
                   <Link href={`/projects/${project.id}`} className="block">
                     <div className="relative h-64 md:h-72 overflow-hidden">
                       <img
-                        src={projectImages[i % projectImages.length]}
+                        src={project.imageUrl || projectImages[i % projectImages.length]}
                         alt={lang === "fr" ? project.titleFr : project.titleEn}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />

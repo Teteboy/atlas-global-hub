@@ -33,7 +33,7 @@ interface Project {
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const { lang, t } = useLanguage();
-  const { getSetting } = useSiteContent();
+  const { getSetting, getJson } = useSiteContent();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -71,6 +71,7 @@ export default function ProjectDetail() {
   const scope = t(project.scopeFr, project.scopeEn);
   const result = t(project.resultFr, project.resultEn);
   const ctaLabel = t(project.ctaLabelFr, project.ctaLabelEn) || t("En savoir plus", "Learn more");
+  const gallery = getJson<string[]>(`project.${project.id}.gallery`, []);
 
   return (
     <motion.div
@@ -157,6 +158,18 @@ export default function ProjectDetail() {
             <h2 className={`text-2xl font-bold text-[var(--color-atlas-dark)] mb-4`}>{t("Résultat", "Result")}</h2>
             <p className="text-gray-700 leading-relaxed">{result}</p>
           </div>
+          {gallery.length > 0 && (
+            <div>
+              <h2 className={`text-2xl font-bold text-[var(--color-atlas-dark)] mb-4`}>{t("Archives photo", "Photo archives")}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {gallery.map((url, i) => (
+                  <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block group overflow-hidden rounded-xl border border-gray-200">
+                    <img src={url} alt={`${title} — ${i + 1}`} loading="lazy" className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="flex justify-center">
             <Link
               href="/contact"

@@ -142,6 +142,26 @@ async function seed() {
       category: "Éducation & Gouvernance",
       featured: true,
     },
+    {
+      titleFr: "Les archives du PARI pédagogique",
+      titleEn: "The PARI Pedagogical Archives",
+      taglineFr: "Retour en images sur le Projet d'Adaptation, de Résilience et d'Innovation pédagogique en contexte de crise à l'ère du numérique",
+      taglineEn: "A photo retrospective of the Project for Adaptation, Resilience and Pedagogical Innovation in crisis contexts in the digital era",
+      challengeFr: "En contexte de crises sécuritaire et sanitaire, les systèmes éducatifs d'Afrique centrale devaient adapter leurs dispositifs de formation pour garantir la continuité et la qualité de l'expérience enseignement-apprentissage.",
+      challengeEn: "In a context of security and health crises, Central African education systems had to adapt their training devices to guarantee the continuity and quality of the teaching-learning experience.",
+      approachFr: "Porté par l'ENS de l'Université de Yaoundé I en partenariat avec l'ENS de Bangui et l'ENS de N'Djamena, le PARI pédagogique fait partie des 22 projets régionaux du programme Partage de Connaissances et d'Innovations (KIX). Comités de pilotage élargis, ateliers d'évaluation et de formation ont rythmé la mise en œuvre du projet dans les trois pays.",
+      approachEn: "Led by the ENS of the University of Yaoundé I in partnership with the ENS of Bangui and the ENS of N'Djamena, PARI Pédagogique is one of the 22 regional projects of the Knowledge and Innovation Exchange (KIX) program. Steering committees, evaluation and training workshops punctuated the project's implementation across the three countries.",
+      scopeFr: "Cameroun, République centrafricaine et Tchad",
+      scopeEn: "Cameroon, Central African Republic and Chad",
+      resultFr: "Trois années de mise en œuvre documentées en images : comités de pilotage, ateliers d'évaluation semestrielle, formations des équipes pays et renforcement des capacités des enseignants communautaires à l'ère du numérique.",
+      resultEn: "Three years of implementation documented in pictures: steering committees, semi-annual evaluation workshops, country team training and capacity building for community teachers in the digital era.",
+      countries: ["Cameroun", "République centrafricaine", "Tchad"],
+      duration: "2021 – 2023",
+      budget: "1 425 700 EUR",
+      funder: "CRDI / Programme KIX",
+      category: "Éducation & Archives",
+      featured: false,
+    },
   ]);
 
   // Seed insights - based on document themes
